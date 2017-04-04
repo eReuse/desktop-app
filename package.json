@@ -3,7 +3,7 @@
   "productName": "My Pc & eReuse Support",
   "version": "0.0.1",
   "main": "main.js",
-  "description": "Helps to eReuse",
+  "description": "Helps to show information about eReuse and support",
   "license": "MIT",
   "repository": "JNadeu/desktop-app",
   "author": {
@@ -42,3 +42,4 @@
     ]
   }
 }
+

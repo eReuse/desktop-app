@@ -3,6 +3,8 @@ const electron = require('electron');
 
 const app = electron.app;
 
+const PythonShell = require('python-shell');
+
 // adds debug features like hotkeys for triggering dev tools and reload
 require('electron-debug')();
 
@@ -41,4 +43,19 @@ app.on('activate', () => {
 
 app.on('ready', () => {
 	mainWindow = createMainWindow();
+});
+
+
+
+let options = {
+	mode: 'text',
+	pythonPath: './python',
+	pythonOptions: ['-u'],
+	scriptPath: '/scripts',
+};
+
+PythonShell.run('my_script.py', options, function (err, results) {
+	if (err) throw err;
+	// results is an array consisting of messages collected during execution
+	console.log('results: %j', results);
 });
