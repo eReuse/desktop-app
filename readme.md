@@ -1,6 +1,6 @@
 # desktop-app
 
-> My flawless app
+> My eReuse.org & Support
 
 
 ## Dev
