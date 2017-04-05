@@ -2,7 +2,6 @@
 
 > Helps to show information about eReuse and supports incidents
 
-
 ## Dev
 
 ```
