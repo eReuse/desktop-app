@@ -7,16 +7,16 @@ body {
 }
 #titol {
 	text-align: center;
-	font-size: 60px;
+	font-size: 4em;
 	font-weight: 100;
 	margin: 0;
-	margin-top: 3em;
+	margin-top: 2em;
 	padding: 0;
 }
 
 .botoD{
 	position: fixed;
-	bottom: 3em;
+	bottom: 2em;
 	width: 100%;
 	margin-top: 2em;
 }

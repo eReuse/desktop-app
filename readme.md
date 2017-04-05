@@ -1,6 +1,6 @@
 # desktop-app
 
-> My flawless app
+> Helps to show information about eReuse and supports incidents
 
 
 ## Dev
