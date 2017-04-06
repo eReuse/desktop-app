@@ -1,50 +1,46 @@
-'use strict';
-const electron = require('electron');
-
-const app = electron.app;
+const electron = require('electron') //create necessary objects
+const {app,BrowserWindow} = electron
+const path = require('path')
+const url = require('url')
 
 const PythonShell = require('python-shell');
 
-// adds debug features like hotkeys for triggering dev tools and reload
-require('electron-debug')();
+let winMain //create main window
 
-// prevent window being garbage collected
-let mainWindow;
+function createWindow() {
+	// Create browser window
 
-function onClosed() {
-	// dereference the window
-	// for multiple windows store them in an array
-	mainWindow = null;
-}
-
-function createMainWindow() {
-	const win = new electron.BrowserWindow({
-		width: 1000,
-		height: 800
+	winMain = new BrowserWindow({
+		width: 800,
+		height: 650
 	});
 
-	win.loadURL(`file://${__dirname}/web/index.html`);
-	win.on('closed', onClosed);
+	//Load index.html
 
-	return win;
+	winMain.loadURL(url.format({
+		pathname: path.join(__dirname, './web/index.html'),
+		protocol: 'file:',
+		slashes: true
+	}));
+
+	//Open devtools
+
+	winMain.webContents.openDevTools();
+
+	winMain.on('closed', () => {
+		winMain = null;
+	});
 }
 
-app.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') {
-		app.quit();
-	}
-});
+	//Run create windows function
+	app.on('ready', createWindow);
 
-app.on('activate', () => {
-	if (!mainWindow) {
-		mainWindow = createMainWindow();
-	}
-});
+	//Quit when all windows are closed
+	app.on('window-all-closed', () => {
+		app.quit()
+	});
 
-app.on('ready', () => {
-	mainWindow = createMainWindow();
-});
-
+	//Runs python script
 
 PythonShell.run('my_script.py', function (err) {
 	if (err) {
