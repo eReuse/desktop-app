@@ -9,7 +9,11 @@
     "start": "electron .",
     "dist": "build"
   },
-  "author": "Jordi Nadeu",
+  "author": {
+    "name": "Jordi Nadeu",
+    "email": "jnadeu@gmail.com",
+    "url": "github.com/eReuse/desktop-app"
+  },
   "license": "GNU Affero v3",
   "private": true,
   "build": {
