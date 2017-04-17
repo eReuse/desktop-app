@@ -1,6 +1,6 @@
 # desktop-app
 
-> Helps to show information about eReuse and supports incidents
+> Helps to show information about eReuse.org and supports incidents
 
 ## Dev
 
@@ -19,7 +19,3 @@ $ npm start
 ```
 $ npm run dist
 ```
-
-## License
-
-MIT © [Nadeu](https://github.com/eReuse/desktop-app)
