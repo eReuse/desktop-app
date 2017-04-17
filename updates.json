@@ -1,17 +1,19 @@
 {
   "linux-x64": {
     "update": "https://github.com/eReuse/desktop-app/releases/download/linux-x64-v0.0.1/desktop-app-0.0.1-x86_64.AppImage",
+    "install": "https://github.com/eReuse/desktop-app/releases/download/linux-x64-v0.0.1/desktop-app-0.0.1-x86_64.AppImage",
     "version": "0.0.2",
-    "readme": "Second version"
+    "platform": "linux",
+    "readme": "Please refer to Github readme."
   },
   "win32-x64": {
     "update": "https://github.com/eReuse/desktop-app/releases/download/desktop-app-0.0.2",
-    "readme": "Second version",
-    "version": "0.0.2"
+    "version": "0.0.2",
+    "platform": "win32",
+    "readme": "Please refer to Github readme."
   },
   "darwin-x64": {
     "update": "https://github.com/eReuse/desktop-app/releases/download/desktop-app-0.0.2/release.json",
-    "version": "0.0.2",
-    "readme": "Second version"
+    "version": "0.0.2"
   }
 }
