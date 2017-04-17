@@ -4,19 +4,19 @@
 
 ## Within app folder run the terminal commands:
 
-## To install the dependencies and devDependencies.
+- To install the dependencies and devDependencies.
 
 -----
 $ npm install
 -----
 
-## For run the app
+- For run the app
 
 -----
 $ npm start
 -----
 
-## To build and packing
+- To build and packing
 
 -----
 $ npm run dist
