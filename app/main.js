@@ -1,12 +1,10 @@
 const electron = require('electron'); //create necessary objects
 const {app,BrowserWindow} = electron;
-const path = require('path');
-const url = require('url');
 const updater = require('electron-simple-updater');
 
 let winMain //create main window
 
-updater.init('https://raw.githubusercontent.com/eReuse/desktop-app/updates.json'); //check if new version is available
+updater.init('https://raw.githubusercontent.com/eReuse/desktop-app/master/updates.json'); //check if new version is available
 
 function createWindow() {
 	// Create browser window

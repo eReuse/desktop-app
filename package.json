@@ -5,12 +5,10 @@
   "scripts": {
     "postinstall": "install-app-deps",
     "start": "electron ./app",
-    "dist": "build",
-    "dist2": "build -mwl"
+    "dist": "build"
   },
   "author": "Jordi Nadeu",
-  "license": "MIT",
-  "private": true,
+  "license": "GNU Affero v3",
   "build": {
     "appId": "ereuse.org.support",
     "win": {
