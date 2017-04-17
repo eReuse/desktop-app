@@ -5,7 +5,7 @@ const updater = require('electron-simple-updater');
 
 let winMain = null //create main window
 
-updater.init('https://raw.githubusercontent.com/eReuse/desktop-app/master/updates.json'); //check if new version is available
+updater.init(); //check if new version is available
 
 function createWindow() {
 	// Create browser window
