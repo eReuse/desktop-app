@@ -1,21 +1,23 @@
-# desktop-app
+# My desktop-app
 
 > Helps to show information about eReuse.org and supports incidents
 
-## Dev
+## Within app folder run the terminal commands:
 
-```
+##To install the dependencies and devDependencies.
+
+-----
 $ npm install
-```
+-----
 
-### Run
+### For run the app
 
-```
+-----
 $ npm start
-```
+-----
 
-### Build
+### To build and packing
 
-```
+-----
 $ npm run dist
-```
+-----

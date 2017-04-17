@@ -1,16 +1,22 @@
 {
-  "name": "electron-simple-updater-example",
-  "description": "Helps to show information about eReuse and support",
+  "name": "desktop-app",
+  "productName": "My eReuse & PC Support",
+  "version": "0.0.1",
+  "description": "Helps to show information about eReuse.org and support",
   "main": "app/main.js",
   "scripts": {
     "postinstall": "install-app-deps",
-    "start": "electron ./app",
+    "start": "electron .",
     "dist": "build"
   },
   "author": "Jordi Nadeu",
   "license": "GNU Affero v3",
+  "private": true,
   "build": {
     "appId": "ereuse.org.support",
+    "mac": {
+      "category": "public.app-category.support-tools"
+    },
     "win": {
       "target": "squirrel"
     },
@@ -21,11 +27,22 @@
       ]
     }
   },
-  "devDependencies": {
-    "electron": "latest",
-    "electron-builder": "latest"
+  "updater": {
+       "url": "https://raw.githubusercontent.com/eReuse/desktop-app/master/updates.json"
+  },
+  "engines": {
+    "node": ">=6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eReuse/desktop-app.git"
   },
   "dependencies": {
-    "electron-simple-updater": "latest"
+    "electron-simple-updater": "^1.2.0",
+    "python-shell": "^0.4.0"
+  },
+  "devDependencies": {
+    "electron": "^1.6.2",
+    "electron-builder": "^17.0.1"
   }
 }

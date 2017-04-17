@@ -1,8 +1,9 @@
-const electron = require('electron'); //create necessary objects
+const electron = require('electron');
 const {app,BrowserWindow} = electron;
 const updater = require('electron-simple-updater');
+//const PythonShell = require('python-shell');
 
-let winMain //create main window
+let winMain = null //create main window
 
 updater.init('https://raw.githubusercontent.com/eReuse/desktop-app/master/updates.json'); //check if new version is available
 
@@ -34,3 +35,10 @@ function createWindow() {
 	app.on('window-all-closed', () => {
 		app.quit()
 	});
+/*
+PythonShell.run('my_script.py', function (err) {
+  if (err) {
+    throw err;
+  }
+  console.log('finished');
+});*/
