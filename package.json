@@ -1,19 +1,17 @@
 {
   "name": "desktop-app",
   "productName": "My eReuse & PC Support",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "Helps to show information about eReuse.org and support",
   "main": "app/main.js",
   "scripts": {
     "postinstall": "install-app-deps",
     "start": "electron .",
-    "dist": "build"
+    "dist": "build",
+    "publish": "publish",
+    "release": "npm run dist && npm run publish"
   },
-  "author": {
-    "name": "Jordi Nadeu",
-    "email": "jnadeu@gmail.com",
-    "url": "github.com/eReuse/desktop-app"
-  },
+  "author": "Jordi Nadeu",
   "license": "GNU Affero v3",
   "private": true,
   "build": {
@@ -24,11 +22,8 @@
     "win": {
       "target": "squirrel"
     },
-    "linux": {
-      "target": [
-        "AppImage",
-        "deb"
-      ]
+    "squirrelWindows": {
+      "iconUrl": "build/icon.ico"
     }
   },
   "updater": {
@@ -39,7 +34,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eReuse/desktop-app.git"
+    "url": "https://github.com/eReuse/desktop-app.git"
   },
   "dependencies": {
     "electron-simple-updater": "^1.2.0",
@@ -47,6 +42,8 @@
   },
   "devDependencies": {
     "electron": "^1.6.2",
-    "electron-builder": "^17.0.1"
+    "electron-builder": "^17.0.1",
+    "electron-simple-publisher": "*",
+    "electron-builder-squirrel-windows": "*"
   }
 }
