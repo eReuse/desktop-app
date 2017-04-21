@@ -2,6 +2,6 @@
   "transport": {
     "module": "github",
     "token": "",
-    "updatesJsonPath": "./updates.json"
+    "updatesJsonPath": "updates.json"
   }
 }
