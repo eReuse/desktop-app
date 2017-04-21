@@ -9,7 +9,6 @@ let winMain = null //create main window
 updater.init({
   autoDownload: true,
   checkUpdateOnStart: true,
-  version: '0.0.1',
 	url: 'https://raw.githubusercontent.com/eReuse/desktop-app/master/updates.json'
 });
 
@@ -27,7 +26,7 @@ function createWindow() {
 
 	//Open devtools
 
-	winMain.webContents.openDevTools();
+	//winMain.webContents.openDevTools();
 
 	winMain.on('closed', () => {
 		winMain = null;
