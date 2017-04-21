@@ -26,9 +26,6 @@
       "iconUrl": "build/icon.ico"
     }
   },
-  "updater": {
-    "url": "https://raw.githubusercontent.com/eReuse/desktop-app/master/updates.json"
-  },
   "engines": {
     "node": ">=6.0"
   },

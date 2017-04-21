@@ -5,7 +5,12 @@ const updater = require('electron-simple-updater');
 
 let winMain = null //create main window
 
-updater.init(); //check if new version is available
+updater.init({
+  autoDownload: true,
+  checkUpdateOnStart: true,
+  version: '0.0.1',
+	url: 'https://raw.githubusercontent.com/eReuse/desktop-app/master/updates.json'
+}); //check if new version is available
 
 function createWindow() {
 	// Create browser window
