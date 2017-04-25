@@ -1,8 +1,8 @@
 {
   "linux-x64-prod": {
-    "update": "https://github.com/eReuse/desktop-app/releases/download/linux-x64-prod-v0.0.3/desktop-app-0.0.3-x86_64.AppImage",
-    "install": "https://github.com/eReuse/desktop-app/releases/download/linux-x64-prod-v0.0.3/desktop-app-0.0.3-x86_64.AppImage",
-    "version": "0.0.3"
+    "update": "https://github.com/eReuse/desktop-app/releases/download/linux-x64-prod-v0.0.4/desktop-app-0.0.4-x86_64.AppImage",
+    "install": "https://github.com/eReuse/desktop-app/releases/download/linux-x64-prod-v0.0.4/desktop-app-0.0.4-x86_64.AppImage",
+    "version": "0.0.4"
   },
   "win32-x64-prod": {
     "readme": "Please refer to Github readme",
