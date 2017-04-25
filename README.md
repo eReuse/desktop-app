@@ -1,23 +1,24 @@
-# eReuse.org desktop-app
+# eReuse.org Desktop-App
 
-> Helps to show information about eReuse.org and supports incidents
+The eReuse.org Desktop-App is an electron app to support and report incidents in recycle pc's, and show relevant information about the digital footprint and contribution with usage of the computer.
 
-## Within app folder run the terminal commands:
+## Installation
 
-- To install the dependencies and devDependencies.
+Within app folder run the terminal commands:
 
------
-$ npm install
------
+To install the dependencies and devDependencies:
 
-- For run the app
+    > $ npm install
 
------
-$ npm start
------
+For run the app:
 
-- To build and packing
+    > $ npm start
 
------
-$ npm run dist
------
+To build and generate an executable:
+
+    > $ npm run dist
+
+To build and publish a new release:
+
+    > $npm run release -- -- --transport-token<Your Github API Token>
+
