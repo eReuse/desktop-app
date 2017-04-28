@@ -1,9 +1,9 @@
 {
   "linux-x64-prod": {
-    "update": "https://github.com/eReuse/desktop-app/releases/download/linux-x64-prod-v0.0.4/desktop-app-0.0.4-x86_64.AppImage",
-    "install": "https://github.com/eReuse/desktop-app/releases/download/linux-x64-prod-v0.0.4/desktop-app-0.0.4-x86_64.AppImage",
-    "version": "0.0.4"
-  },
+    "update": "https://github.com/eReuse/desktop-app/releases/download/linux-x64-prod-v0.0.1/desktop-app-0.0.1-x86_64.AppImage",
+    "install": "https://github.com/eReuse/desktop-app/releases/download/linux-x64-prod-v0.0.1/desktop-app-0.0.1-x86_64.AppImage",
+    "version": "0.0.1"
+  }
   "win32-x64-prod": {
     "readme": "Please refer to Github readme",
     "update": "https://github.com/megahertz/electron-simple-updater/releases/download/win32-x64-prod-v0.0.1",
