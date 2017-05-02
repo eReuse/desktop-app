@@ -15,15 +15,20 @@
   "license": "GNU Affero v3",
   "private": true,
   "build": {
-    "appId": "ereuse.org.support",
-    "mac": {
-      "category": "public.app-category.support-tools"
-    },
+    "productName": "My eReuse & Support",
+    "appId": "tools.ereuse.org.support",
     "win": {
       "target": "squirrel"
     },
     "squirrelWindows": {
-      "iconUrl": "build/icon.ico"
+      "iconUrl": "https://raw.githubusercontent.com/eReuse/desktop-app/master/build/icon.ico"
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "AppImage"
+      ],
+      "icon": "build/icons"
     }
   },
   "updater": {
