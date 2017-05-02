@@ -16,13 +16,19 @@ function createWindow() {
 	// Create browser window
 
 	winMain = new BrowserWindow({
-		width: 800,
-		height: 650
+		show: false,
+		width: 1024,
+		height: 728
 	});
 
 	//Load index.html
 
 	winMain.loadURL('file://' + __dirname + '/index.html');
+
+  winMain.webContents.on('did-finish-load', () => {
+    winMain.show();
+    winMain.focus();
+  });
 
 	//Open devtools
 
@@ -40,6 +46,7 @@ function createWindow() {
 	app.on('window-all-closed', () => {
 		app.quit()
 	});
+
 /*
 PythonShell.run('my_script.py', function (err) {
   if (err) {
