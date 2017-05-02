@@ -1,12 +1,13 @@
 {
   "name": "desktop-app",
-  "productName": "My eReuse & PC Support",
+  "productName": "My eReuse & Support",
   "version": "0.0.1",
   "description": "Helps to show information about eReuse.org and support",
   "main": "app/main.js",
   "scripts": {
     "postinstall": "install-app-deps",
     "start": "electron .",
+    "clean": "rm -r dist",
     "dist": "build",
     "publish": "publish",
     "release": "npm run dist && npm run publish"
