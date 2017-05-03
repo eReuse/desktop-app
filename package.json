@@ -7,29 +7,46 @@
   "scripts": {
     "postinstall": "install-app-deps",
     "start": "electron .",
-    "clean": "rm -r dist",
+    "clear": "rm -r dist",
     "dist": "build",
     "publish": "publish",
     "release": "npm run dist && npm run publish"
   },
-  "author": "Jordi Nadeu",
+  "author": {
+    "name": "Jordi Nadeu",
+    "email": "j.nadeu@ereuse.org",
+    "url": "https://github.com/JNadeu/"
+  },
   "license": "GNU Affero v3",
   "private": true,
   "build": {
     "productName": "My eReuse & Support",
     "appId": "tools.ereuse.org.support",
-    "win": {
-      "target": "squirrel"
-    },
-    "squirrelWindows": {
-      "iconUrl": "https://raw.githubusercontent.com/eReuse/desktop-app/master/build/icon.ico"
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
     },
     "linux": {
+      "category": "Utility",
       "target": [
-        "deb",
-        "AppImage"
+        "AppImage",
+        "deb"
       ],
-      "icon": "build/icons"
+      "icon": "./build/icons"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "./build/icon.ico"
     }
   },
   "updater": {
@@ -50,6 +67,10 @@
     "electron": "^1.6.2",
     "electron-builder": "^17.0.1",
     "electron-builder-squirrel-windows": "*",
-    "electron-simple-publisher": "^0.4.4"
+    "electron-simple-publisher": "^0.4.4",
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
   }
 }
