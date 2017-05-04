@@ -8,8 +8,10 @@
     "postinstall": "install-app-deps",
     "start": "electron .",
     "clear": "rm -r dist",
-    "dist": "build",
-    "publish": "publish",
+    "dist": "build --ia32 & build --x64",
+    "dist32": "build --linux --ia32",
+    "dist64": "build --linux --x64",
+    "publish": "publish linux-ia32 linux-x64",
     "release": "npm run dist && npm run publish"
   },
   "author": {
@@ -38,18 +40,15 @@
     },
     "linux": {
       "category": "Utility",
-      "target": [
-        "AppImage",
-        "deb"
-      ],
       "icon": "./build/icons"
     },
     "win": {
-      "target": "nsis",
+      "target": "squirrel",
       "icon": "./build/icon.ico"
     }
   },
   "updater": {
+    "channel": "beta",
     "url": "https://raw.githubusercontent.com/eReuse/desktop-app/master/updates.json"
   },
   "engines": {
