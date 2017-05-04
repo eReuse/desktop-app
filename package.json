@@ -1,18 +1,20 @@
 {
-  "name": "desktop-app",
-  "productName": "My eReuse & Support",
+  "name": "eReuse.org-DesktopApp",
+  "productName": "My eReuse.org & Support",
   "version": "0.0.1",
-  "description": "Helps to show information about eReuse.org and support",
+  "description": "Support PC and report incidents, and also show information about eReuse.org and the social contribution with usage of this computer",
   "main": "app/main.js",
   "scripts": {
     "postinstall": "install-app-deps",
     "start": "electron .",
     "clear": "rm -r dist",
-    "dist": "build --ia32 & build --x64",
+    "dist": "npm run dist32 && npm run dist64",
     "dist32": "build --linux --ia32",
     "dist64": "build --linux --x64",
-    "publish": "publish linux-ia32 linux-x64",
-    "release": "npm run dist && npm run publish"
+    "publish64": "publish linux-x64",
+    "publish32": "publish linux-ia32",
+    "release32": "npm run dist32 && npm run publish32",
+    "release64": "npm run dist64 && npm run publish64"
   },
   "author": {
     "name": "Jordi Nadeu",
@@ -22,7 +24,7 @@
   "license": "GNU Affero v3",
   "private": true,
   "build": {
-    "productName": "My eReuse & Support",
+    "productName": "My eReuse.org & Support",
     "appId": "tools.ereuse.org.support",
     "dmg": {
       "contents": [
@@ -48,7 +50,6 @@
     }
   },
   "updater": {
-    "build": "linux-x64 linux-ia32",
     "channel": "beta",
     "url": "https://raw.githubusercontent.com/eReuse/desktop-app/master/updates.json"
   },
