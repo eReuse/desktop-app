@@ -16,9 +16,9 @@
     "install": "https://github.com/megahertz/electron-simple-updater/releases/download/darwin-x64-prod-v0.0.1/Simple.Updater.Example-0.0.1.dmg",
     "version": "0.0.1"
   },
-  "linux-ia32-beta": {
-    "update": "https://github.com/eReuse/desktop-app/releases/download/linux-ia32-beta-v0.0.1/desktop-app-0.0.1-ia32.AppImage",
-    "install": "https://github.com/eReuse/desktop-app/releases/download/linux-ia32-beta-v0.0.1/desktop-app-0.0.1-ia32.AppImage",
+  "linux-x64-beta": {
+    "update": "https://github.com/eReuse/desktop-app/releases/download/linux-x64-beta-v0.0.1/desktop-app-0.0.1-x86_64.AppImage",
+    "install": "https://github.com/eReuse/desktop-app/releases/download/linux-x64-beta-v0.0.1/desktop-app-0.0.1-x86_64.AppImage",
     "version": "0.0.1"
   }
 }
