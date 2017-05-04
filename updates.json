@@ -5,8 +5,8 @@
     "version": "0.0.2"
   },
   "linux-ia32-beta": {
-    "update": "https://github.com/eReuse/desktop-app/releases/download/linux-ia32-beta-v0.0.3/desktop-app-0.0.3-ia32.AppImage",
-    "install": "https://github.com/eReuse/desktop-app/releases/download/linux-ia32-beta-v0.0.3/desktop-app-0.0.3-ia32.AppImage",
-    "version": "0.0.3"
+    "update": "https://github.com/eReuse/desktop-app/releases/download/linux-ia32-beta-v0.0.4/desktop-app-0.0.4-ia32.AppImage",
+    "install": "https://github.com/eReuse/desktop-app/releases/download/linux-ia32-beta-v0.0.4/desktop-app-0.0.4-ia32.AppImage",
+    "version": "0.0.4"
   }
 }
