@@ -1,22 +1,28 @@
 html,
 body {
-  padding: 0;
-  margin: 0;
-  background-color: #f2f2f2;
-  overflow: hidden;
-  height: 100%;
+      padding: 0;
+      margin: 0;
+      background-color: #f2f2f2;
+      overflow: hidden;
+      height: 100%;
+}
+
+iframe {
+    background-color: cadetblue;
+    height: 70%;
+    width : 100%;
 }
 
 #titol {
-  text-align: center;
-  font-size: 2em;
+    text-align: center;
+    font-size: 2em;
     font-weight: bold;
-  padding: 0;
+    padding: 0;
 }
 
 .botoD{
-  position: fixed;
-  bottom: 2em;
-  width: 100%;
-  margin-top: 2em;
+    position: fixed;
+    bottom: 2em;
+    width: 100%;
+    margin-top: 2em;
 }

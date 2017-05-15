@@ -1,6 +1,6 @@
 node_modules
 /dist
 .idea
-/app/my_script.py
+my_script.py
 .editorconfig
 .eslintrc.json

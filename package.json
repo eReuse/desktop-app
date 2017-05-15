@@ -11,6 +11,7 @@
     "dist": "npm run dist32 && npm run dist64",
     "dist32": "build --linux --ia32",
     "dist64": "build --linux --x64",
+    "distm": "build -m",
     "publish64": "publish linux-x64",
     "publish32": "publish linux-ia32",
     "release32": "npm run dist32 && npm run publish32",
@@ -41,6 +42,10 @@
       ]
     },
     "linux": {
+      "target": [
+        "deb",
+        "AppImage"
+      ],
       "category": "Utility",
       "icon": "./build/icons"
     },

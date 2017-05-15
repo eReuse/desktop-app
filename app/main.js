@@ -3,7 +3,7 @@ const {app, BrowserWindow} = electron
 const path = require('path')
 const url = require('url')
 const updater = require('electron-simple-updater')
-// const PythonShell = require('python-shell');
+const PythonShell = require('python-shell')
 
 let winMain = null // create main window
 
@@ -37,7 +37,7 @@ function createWindow () {
 
   // Open devtools
 
-  // winMain.webContents.openDevTools();
+  //winMain.webContents.openDevTools();
 
   winMain.on('closed', () => {
     winMain = null
@@ -52,10 +52,10 @@ app.on('window-all-closed', () => {
   app.quit()
 })
 
-/*
- PythonShell.run('my_script.py', function (err) {
- if (err) {
- throw err;
- }
- console.log('finished');
- }); */
+PythonShell.run('my_script.py', {pythonPath: 'python3'}, (err,results) => {
+  if (err) {
+    throw err
+  }
+  //console.log(results)
+  console.log('finished')
+})
