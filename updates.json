@@ -1,12 +1,12 @@
 {
   "linux-x64-beta": {
-    "update": "https://github.com/eReuse/desktop-app/releases/download/linux-x64-beta-v0.0.1/desktop-app-0.0.1-x86_64.AppImage",
-    "install": "https://github.com/eReuse/desktop-app/releases/download/linux-x64-beta-v0.0.1/desktop-app-0.0.1-x86_64.AppImage",
+    "update": "https://github.com/eReuse/desktop-app/releases/download/linux-x64-beta-v0.0.1/eReuse.org-DesktopApp-0.0.1-x86_64.AppImage",
+    "install": "https://github.com/eReuse/desktop-app/releases/download/linux-x64-beta-v0.0.1/eReuse.org-DesktopApp-0.0.1-x86_64.AppImage",
     "version": "0.0.1"
   },
   "linux-ia32-beta": {
-    "update": "https://github.com/eReuse/desktop-app/releases/download/linux-ia32-beta-v0.0.1/desktop-app-0.0.1-ia32.AppImage",
-    "install": "https://github.com/eReuse/desktop-app/releases/download/linux-ia32-beta-v0.0.1/desktop-app-0.0.1-ia32.AppImage",
-    "version": "0.0.1"
+    "update": "https://github.com/eReuse/desktop-app/releases/download/linux-ia32-beta-v0.0.2/eReuse.org-DesktopApp-0.0.2-ia32.AppImage",
+    "install": "https://github.com/eReuse/desktop-app/releases/download/linux-ia32-beta-v0.0.2/eReuse.org-DesktopApp-0.0.2-ia32.AppImage",
+    "version": "0.0.2"
   }
 }
