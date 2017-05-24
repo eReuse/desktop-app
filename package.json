@@ -11,7 +11,6 @@
     "dist": "npm run dist32 && npm run dist64",
     "dist32": "build --linux --ia32",
     "dist64": "build --linux --x64",
-    "distm": "build -m",
     "publish64": "publish linux-x64",
     "publish32": "publish linux-ia32",
     "release32": "npm run dist32 && npm run publish32",
@@ -27,26 +26,11 @@
   "build": {
     "productName": "My eReuse.org & Support",
     "appId": "tools.ereuse.org.support",
-    "dmg": {
-      "contents": [
-        {
-          "x": 110,
-          "y": 150
-        },
-        {
-          "x": 240,
-          "y": 150,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
     "linux": {
       "target": [
-        "deb",
         "AppImage"
       ],
-      "category": "Utility",
+      "category": "System",
       "icon": "./build/icons"
     },
     "win": {

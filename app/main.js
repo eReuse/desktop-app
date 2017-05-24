@@ -1,11 +1,14 @@
-const electron = require('electron')
-const {app, BrowserWindow} = electron
+const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 const url = require('url')
+const exec = require('child_process').exec
 const updater = require('electron-simple-updater')
-const PythonShell = require('python-shell')
 
 let winMain = null // create main window
+
+updater.on('update-downloaded', (event) => {
+  exec('pip install -U git+https://github.com/Garito/workbench.git')
+})
 
 // check if new version is available, download and install it
 updater.init()
@@ -37,7 +40,7 @@ function createWindow () {
 
   // Open devtools
 
-  //winMain.webContents.openDevTools();
+  winMain.webContents.openDevTools();
 
   winMain.on('closed', () => {
     winMain = null
@@ -47,15 +50,16 @@ function createWindow () {
 // Run create windows function
 app.on('ready', createWindow)
 
+// comunicate with render process send
+
+ipcMain.on('toggle-prefs', function () {
+  if (prefsWindow.isVisible())
+    prefsWindow.hide()
+  else
+    prefsWindow.show()
+})
+
 // Quit when all windows are closed
 app.on('window-all-closed', () => {
   app.quit()
-})
-
-PythonShell.run('my_script.py', {pythonPath: 'python3'}, (err,results) => {
-  if (err) {
-    throw err
-  }
-  //console.log(results)
-  console.log('finished')
 })
