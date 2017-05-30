@@ -1,7 +1,7 @@
 {
   "name": "eReuse.org-DesktopApp",
   "productName": "My eReuse.org & Support",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Support PC and report incidents, and also show information about eReuse.org and the social contribution with usage of this computer",
   "main": "app/main.js",
   "scripts": {
@@ -24,10 +24,11 @@
   "license": "GNU Affero v3",
   "private": true,
   "build": {
-    "productName": "My eReuse.org & Support",
+    "productName": "MyeReuse.org_Support",
     "appId": "tools.ereuse.org.support",
     "linux": {
       "target": [
+        "deb",
         "AppImage"
       ],
       "category": "System",
@@ -51,7 +52,8 @@
   },
   "dependencies": {
     "electron-simple-updater": "^1.2.0",
-    "python-shell": "^0.4.0"
+    "request": "^2.81.0",
+    "request-promise": "^4.2.1"
   },
   "devDependencies": {
     "electron": "^1.6.2",

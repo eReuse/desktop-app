@@ -1,31 +1,30 @@
 const {remote, ipcRenderer} = require('electron')
-const {Menu, MenuItem} = remote
+const path = require('path')
+const fs = require('fs')
 const spawn = remote.require('child_process').spawn
 
-const menu = Menu.buildFromTemplate([
-  {
-    label: 'Electron',
-    submenu: [
-      {
-        label: 'Prefs',
-        click: function () {
-          ipcRenderer.send('toggle-prefs')
-        }
-      }
-    ]
-  }
-])
 
-Menu.setApplicationMenu(menu)
+/* json read and write
+const jsonfile = require('jsonfile')
+
+let srcJson = path.join('/tmp/data.json')
+let dist = path.join('/usr/eReuse.org')
+
+jsonfile.readFile(srcJson, function (err, obj) {
+   jsonfile.writeFile(dist, obj, function (err) {
+   console.error(err)
+   })
+  console.dir(obj)
+}) */
 
 // if button click execute erwb
 
 document.getElementById('botoDiag').addEventListener('click', runWorkbench)
 
 /*
-let button = document.createElement('button')
-button.textContent = 'Diagnostic'
-*/
+ let button = document.createElement('button')
+ button.textContent = 'Diagnostic'
+ */
 
 let workbench = null
 
@@ -34,15 +33,14 @@ function runWorkbench () {
 
   workbench.on('exit', () => {
     console.log(`Child exited wb finished`)
-    catchJSON()
+    // catchJSON()
   })
 }
 
-// put result JSON in eReuse.org
+/* put result JSON in eReuse.org
 
 function catchJSON () {
   console.log('this is catchJSON')
-  /*
   list('tmp/*json').forEach(path => {
     const file = open(path)
     const snapshot = json.load(file)
@@ -53,5 +51,6 @@ function catchJSON () {
       return false
     }
   })
-  console.log('Finish catchJSON') */
+  console.log('Finish catchJSON')
 }
+*/
