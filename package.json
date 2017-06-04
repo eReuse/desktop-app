@@ -24,7 +24,7 @@
   "license": "GNU Affero v3",
   "private": true,
   "build": {
-    "productName": "MyeReuse.org_Support",
+    "productName": "My_eReuse.org_Support",
     "appId": "tools.ereuse.org.support",
     "linux": {
       "target": [

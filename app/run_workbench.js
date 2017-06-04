@@ -36,21 +36,3 @@ function runWorkbench () {
     // catchJSON()
   })
 }
-
-/* put result JSON in eReuse.org
-
-function catchJSON () {
-  console.log('this is catchJSON')
-  list('tmp/*json').forEach(path => {
-    const file = open(path)
-    const snapshot = json.load(file)
-    if ('@type' in snapshot['device']) {
-      send().catch(_ => {
-        saveToFile(file, 'path/to/save')
-      })
-      return false
-    }
-  })
-  console.log('Finish catchJSON')
-}
-*/

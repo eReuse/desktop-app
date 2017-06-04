@@ -2,17 +2,17 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 const url = require('url')
-const exec = require('child_process').exec
+// const exec = require('child_process').exec
 const updater = require('electron-simple-updater')
 const updateLinux = require('./update_linux')
 
 let winMain = null // create main window
 let version = app.getVersion()
 
+/*
 updater.on('update-downloaded', (event) => {
   exec('pip install -U git+https://github.com/Garito/workbench.git')
-})
-
+}) */
 
 // check if new version is available, download and install it
 updater.init()
@@ -51,10 +51,15 @@ function createWindow () {
   })
 }
 
+function autoUpdate () {
+  updateLinux.autoUpdateL(version)
+}
+
 // Run create windows function
 app.on('ready', () => {
   createWindow()
-  updateLinux.getJson(version)
+  // initDirs()
+  autoUpdate()
 })
 
 // Quit when all windows are closed
