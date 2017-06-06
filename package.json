@@ -1,7 +1,7 @@
 {
   "name": "eReuse.org-DesktopApp",
   "productName": "My eReuse.org & Support",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Support PC and report incidents, and also show information about eReuse.org and the social contribution with usage of this computer",
   "main": "app/main.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "dist": "npm run dist32 && npm run dist64",
     "dist32": "build --linux --ia32",
     "dist64": "build --linux --x64",
-    "publish64": "publish linux-x64",
+    "publish": "publish",
     "publish32": "publish linux-ia32",
     "release32": "npm run dist32 && npm run publish32",
     "release64": "npm run dist64 && npm run publish64"
@@ -24,7 +24,7 @@
   "license": "GNU Affero v3",
   "private": true,
   "build": {
-    "productName": "My_eReuse.org_Support",
+    "productName": "My eReuse.org Support",
     "appId": "tools.ereuse.org.support",
     "linux": {
       "target": [

@@ -17,6 +17,8 @@ updater.on('update-downloaded', (event) => {
 // check if new version is available, download and install it
 updater.init()
 
+updateLinux.autoUpdateL(version)
+
 function createWindow () {
   // Create browser window
 
@@ -51,15 +53,9 @@ function createWindow () {
   })
 }
 
-function autoUpdate () {
-  updateLinux.autoUpdateL(version)
-}
-
 // Run create windows function
 app.on('ready', () => {
   createWindow()
-  // initDirs()
-  autoUpdate()
 })
 
 // Quit when all windows are closed
