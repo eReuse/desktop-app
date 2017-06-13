@@ -2,8 +2,6 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 const url = require('url')
-// const exec = require('child_process').exec
-const updater = require('electron-simple-updater')
 const updateLinux = require('./update_linux')
 
 let winMain = null // create main window
@@ -15,7 +13,6 @@ updater.on('update-downloaded', (event) => {
 }) */
 
 // check if new version is available, download and install it
-updater.init()
 
 updateLinux.autoUpdateL(version)
 
@@ -38,7 +35,7 @@ function createWindow () {
     slashes: true
   }))
 
-  // wait all are ready to show
+  // wait all DOM are ready to show
   winMain.webContents.on('did-finish-load', () => {
     winMain.show()
     winMain.focus()
@@ -46,7 +43,7 @@ function createWindow () {
 
   // Open devtools
 
-  winMain.webContents.openDevTools();
+  // winMain.webContents.openDevTools()
 
   winMain.on('closed', () => {
     winMain = null
@@ -56,6 +53,7 @@ function createWindow () {
 // Run create windows function
 app.on('ready', () => {
   createWindow()
+
 })
 
 // Quit when all windows are closed

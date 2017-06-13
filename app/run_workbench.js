@@ -3,7 +3,6 @@ const path = require('path')
 const fs = require('fs')
 const spawn = remote.require('child_process').spawn
 
-
 /* json read and write
 const jsonfile = require('jsonfile')
 

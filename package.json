@@ -1,7 +1,7 @@
 {
   "name": "eReuse.org-DesktopApp",
   "productName": "My eReuse.org & Support",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "Support PC and report incidents, and also show information about eReuse.org and the social contribution with usage of this computer",
   "main": "app/main.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "start": "electron .",
     "clear": "rm -r dist",
     "dist": "npm run dist32 && npm run dist64",
-    "dist32": "build --linux --ia32",
+    "dist32": "build --linux --ia32 ",
     "dist64": "build --linux --x64",
     "publish": "publish",
     "publish32": "publish linux-ia32",
@@ -22,17 +22,18 @@
     "url": "https://github.com/JNadeu/"
   },
   "license": "GNU Affero v3",
-  "private": true,
   "build": {
     "productName": "My eReuse.org Support",
     "appId": "tools.ereuse.org.support",
     "linux": {
       "target": [
-        "deb",
-        "AppImage"
+        "deb"
       ],
       "category": "System",
       "icon": "./build/icons"
+    },
+    "deb": {
+      "afterInstall": "./scripts/installDeb.sh"
     },
     "win": {
       "target": "squirrel",

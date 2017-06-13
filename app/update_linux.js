@@ -1,7 +1,7 @@
 // const remote = require('electron')
+const {spawn, exec} = require('child_process')
 const semver = require('semver')
 const rp = require('request-promise')
-const spawn = require('child_process').spawn
 
 const meta = {
   name: null,
@@ -10,42 +10,39 @@ const meta = {
   platform: process.platform
 }
 
-let optionsJson = {
-  uri: 'https://raw.githubusercontent.com/eReuse/desktop-app/master/package.json',
-  /*
-   qs: {
-   access_token: 'xxxxx xxxxx' // -> uri + '?access_token=xxxxx%20xxxxx'
-   }, */
-  headers: {
-    'User-Agent': 'Request-Promise'
-  },
-  json: true // Automatically parses the JSON string in the response
-}
-
 function downloadRelease (versionA) {
+  let optionsJson = {
+    uri: 'https://raw.githubusercontent.com/eReuse/desktop-app/master/package.json',
+    headers: {
+      'User-Agent': 'Request-Promise'
+    },
+    json: true // Automatically parses the JSON string in the response
+  }
+  // get last packages.json version
   rp(optionsJson).then(infoapp => {
     meta.name = infoapp.name
     meta.version = infoapp.version
     let tag = meta.platform + '-' + meta.arch + '-' + meta.version
-    let installer = meta.name + '_v' + meta.version + '.deb'
+    let installer = meta.name + '_' + meta.version + '.deb'
     let urlRelease = 'https://github.com/eReuse/desktop-app/releases/download/' + tag + '/' + installer
-    console.log(urlRelease)
-    if (semver.gt(meta.version, versionA)) {
-      let release = spawn('wget', ['-P ' + pathDeb + ' ' + urlRelease])
-      release.on('exit', () => {
-        console.log(`Child exited wget finished`)
-        let installdeb = spawn('gksudo', ['-k', 'dpkg -i ' + installer])
-        installdeb.on('exit', () => {
-          console.log(`Child exited dpkg finished`)
+    if (!semver.gt(meta.version, versionA)) {
+      console.log('You have the last version')
+    } else {
+      let release = exec('wget -P /tmp ' + urlRelease, () => {
+        let install = spawn('gksudo', ['-k', 'dpkg -i /tmp/' + installer])
+        install.on('exit', (code) => {
+          console.log('Child exited dpkg finished with code ' + code)
+
         })
       })
-    } else console.log('You have the last version')
+      release.on('exit', (code) => {
+        console.log('Child exited wget finished with code ' + code)
+      })
+    }
   }).catch(err => {
     console.log(err)
   })
 }
-
-const pathDeb = '~/.MyeReuse.org_Support/update/'
 
 module.exports = {
   autoUpdateL: downloadRelease
