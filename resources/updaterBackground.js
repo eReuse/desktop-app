@@ -1,19 +1,20 @@
-const {spawn, exec} = require('child_process')
-const semver = require('semver')
-const rp = require('request-promise')
+#!/usr/local/bin/node
 
-const githubMeta = {
+var spawn = require('child_process').spawn
+var  exec = require('child_process').exec
+var semver = require('semver')
+var rp = require('request-promise')
+
+var githubMeta = {
   name: null,
   version: null, // todo get this from app
   arch: process.arch,
   platform: process.platform
 }
 
-const localMeta = {
-  version: '1.0.0'
-}
+var localVersion = '1.0.0' //automatitzar la version actual
 
-let optionsJson = {
+var optionsJson = {
   uri: 'https://raw.githubusercontent.com/eReuse/desktop-app/master/package.json',
   headers: {
     'User-Agent': 'Request-Promise'
@@ -24,22 +25,22 @@ let optionsJson = {
 rp(optionsJson).then(function getLastPackageVersion (infoapp) {
   githubMeta.name = infoapp.name
   githubMeta.version = infoapp.version
-  let tag = githubMeta.platform + '-' + githubMeta.arch + '-' + githubMeta.version //todo publish with tag=linux-x64-1.0.0
-  let installer = githubMeta.name + '_' + githubMeta.version + '.deb' // installer: eReuse.org-DesktopApp_1.0.0.deb
-  let urlRelease = 'https://github.com/eReuse/desktop-app/releases/download/' + tag + '/' + installer
-  if (!semver.gt(githubMeta.version, localMeta.version)) {
-    console.log('You have the last version ' + githubMeta.version + ' el local version es: ' + localMeta.version )
+  var tag = githubMeta.platform + '-' + githubMeta.arch + '-' + githubMeta.version // todo publish with tag=linux-x64-1.0.0
+  var installer = githubMeta.name + '_' + githubMeta.version + '.deb' // installer: eReuse.org-DesktopApp_1.0.0.deb
+  var urlRelease = 'https://github.com/eReuse/desktop-app/releases/download/' + tag + '/' + installer
+  if (!semver.gt(githubMeta.version, localVersion)) {
+    console.log('You have the last version ' + githubMeta.version + ' el local version es: ' + localMeta.version)
   } else {
-    let release = exec('wget -P /tmp ' + urlRelease, () => {
-      let install = spawn('gksudo', ['-k', 'dpkg -i /tmp/' + installer])
-      install.on('exit', (code) => {
+    var release = exec('wget -P /tmp ' + urlRelease, function () {
+      var install = spawn('gksudo', ['-k', 'dpkg -i /tmp/' + installer])
+      install.on('exit', function (code) {
         console.log('Child exited dpkg finished with code ' + code)
       })
     })
-    release.on('exit', (code) => {
+    release.on('exit', function (code) {
       console.log('Child exited wget finished with code ' + code)
     })
   }
-}).catch(err => {
+}).catch(function (err) {
   console.log(err)
 })
