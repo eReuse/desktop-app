@@ -4,3 +4,4 @@ node_modules
 .editorconfig
 .eslintrc.json
 ereuse-workbench.log
+/scripts/testInstall.sh
