@@ -1,5 +1,5 @@
 //import updateLinux from 'update_linux'
-const {app, BrowserWindow, ipcMain} = require('electron')
+const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
 const updateLinux = require('./update_linux')
@@ -43,7 +43,7 @@ function createWindow () {
 
   // Open devtools
 
-  // winMain.webContents.openDevTools()
+  winMain.webContents.openDevTools()
 
   winMain.on('closed', () => {
     winMain = null
@@ -53,7 +53,6 @@ function createWindow () {
 // Run create windows function
 app.on('ready', () => {
   createWindow()
-
 })
 
 // Quit when all windows are closed

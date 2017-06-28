@@ -1,7 +1,6 @@
 node_modules
 /dist
 .idea
-my_script.py
 .editorconfig
 .eslintrc.json
 ereuse-workbench.log
