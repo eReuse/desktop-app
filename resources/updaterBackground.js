@@ -1,18 +1,18 @@
-#!/usr/local/bin/node
+#!/usr/local/bin/nodejs
 
-var spawn = require('child_process').spawn
-var  exec = require('child_process').exec
-var semver = require('/usr/local/lib/node_modules/semver') // /usr/local/lib/node_modules/semver/bin/semver
-var rp = require('/usr/local/lib/node_modules/request-promise')
+const spawn = require('child_process').spawn
+const  exec = require('child_process').exec
+const semver = require('/usr/local/lib/node_modules/semver') // /usr/local/lib/node_modules/semver/bin/semver
+const rp = require('/usr/local/lib/node_modules/request-promise')
 
-var githubMeta = {
+const githubMeta = {
   name: null,
   version: null, // todo get this from app
   arch: process.arch,
   platform: process.platform
 }
 
-var localVersion = '1.0.0' //automatitzar la version actual
+const localVersion = '1.0.0' //automatitzar la version actual
 
 var optionsJson = {
   uri: 'https://raw.githubusercontent.com/eReuse/desktop-app/master/package.json',
