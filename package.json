@@ -9,12 +9,10 @@
     "start": "electron .",
     "clear": "rm -r dist",
     "dist": "npm run dist32 && npm run dist64",
-    "dist32": "build --linux --ia32 ",
-    "dist64": "build --linux --x64",
+    "linux32": "build --linux --ia32 ",
+    "linux64": "build --linux --x64",
     "publish": "publish",
-    "publish32": "publish linux-ia32",
-    "release32": "npm run dist32 && npm run publish32",
-    "release64": "npm run dist64 && npm run publish64"
+    "release64": "npm run linux64 && npm run publish"
   },
   "author": {
     "name": "Jordi Nadeu",
@@ -61,10 +59,10 @@
     "url": "https://github.com/eReuse/desktop-app.git"
   },
   "dependencies": {
-    "node-notifier": "^5.1.2",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
-    "semver": "^5.3.0"
+    "semver": "^5.3.0",
+    "node-notifier": "^5.1.2"
   },
   "devDependencies": {
     "electron": "^1.6.2",

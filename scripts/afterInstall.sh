@@ -3,6 +3,9 @@
 #sleep 10
 
 # instalar require script.js amb npm
+# curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+# sudo apt-get install -y nodejs
+# sudo apt-get install -y npm
 
 npm install -g semver request request-promise
 #npm install -g request
