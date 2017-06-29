@@ -2,8 +2,8 @@
 
 var spawn = require('child_process').spawn
 var  exec = require('child_process').exec
-var semver = require('semver')
-var rp = require('request-promise')
+var semver = require('/usr/local/lib/node_modules/semver') // /usr/local/lib/node_modules/semver/bin/semver
+var rp = require('/usr/local/lib/node_modules/request-promise')
 
 var githubMeta = {
   name: null,
