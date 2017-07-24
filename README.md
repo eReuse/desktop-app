@@ -1,6 +1,6 @@
 # eReuse.org Desktop-App
 
-The eReuse.org Desktop-App is an electron app to support and report incidents in recycle pc's, and show relevant information about the social contribution with usage of the computer.
+The eReuse.org Desktop-App is an electron app supporting help-desk incidents ocurred on desktops and laptops.
 
 ## Features
 
