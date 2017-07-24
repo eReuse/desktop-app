@@ -52,17 +52,19 @@
     "url": "https://raw.githubusercontent.com/eReuse/desktop-app/master/updates.json"
   },
   "engines": {
-    "node": ">=6.0"
+    "node": ">=7.10"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/eReuse/desktop-app.git"
   },
   "dependencies": {
+    "dotenv": "^4.0.0",
+    "node-notifier": "^5.1.2",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
     "semver": "^5.3.0",
-    "node-notifier": "^5.1.2"
+    "username": "^3.0.0"
   },
   "devDependencies": {
     "electron": "^1.6.2",

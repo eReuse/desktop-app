@@ -2,10 +2,17 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
+const username = require('username')
+const dotenv = require('dotenv').config()
 const updateLinux = require('./update_linux')
 
 let winMain = null // create main window
 let version = app.getVersion()
+
+username().then(username => {
+  console.log(username)
+  //=> 'sindresorhus'
+})
 
 /*
 updater.on('update-downloaded', (event) => {
