@@ -1,6 +1,7 @@
 const { remote } = require('electron')
-const path = require('path')
 const spawn = remote.require('child_process').spawn
+const path = require('path')
+const fs = require('fs')
 const rp = require('request-promise')
 const dotenv = require('dotenv').config()
 
@@ -18,54 +19,73 @@ function showErr (err) {
 
 // Docu login and send json http://devicehub.ereuse.org/
 
-function sendJsonToDeviceHub () {
-  let jsonObject = path.join(__dirname, '/resources/testwb.json')
-  console.dir(jsonObject) // no pilla el json correcte
-  let opLogin = {
-    method: 'POST',
-    uri: 'http://devicehub.ereuse.net/login',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    body: {
-      email: process.env.EMAIL_DH,
-      password: process.env.PASS_DH
-    },
-    json: true // Automatically stringifies the body to JSON
-  }
-
-  rp(opLogin).then(loginPost => {
-    let tokenDh = loginPost.token
-    let dbName = loginPost.defaultDatabase
-    let opSnapshot = {
-      method: 'POST',
-      uri: 'http://devicehub.ereuse.net/' + dbName + '/events/devices/snapshot',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Basic ' + tokenDh
-      },
-      body: JSON.stringify({jsonObject})
-    }
-    rp(opSnapshot).then(responseSnapshot => {
-      console.log('snapshot send succesfully')
-    }).catch(showErr) // todo show alert when no internet
-  }).catch(showErr)
-}
-
 let workbench = null
 
 function runWorkbench () {
-  workbench = spawn('gksudo', ['-k', 'erwb --settings /usr/eReuse.org/config1.ini'])
+  workbench = spawn('gksudo', ['-k', 'erwb'])
 
   workbench.on('exit', () => {
     console.log(`Child exited wb finished`)
     console.log(process.env.EMAIL_WB)
     console.log(process.env.PASS_WB)
-    sendJsonToDeviceHub()
+    let jsonDir = path.join(__dirname, 'testwb.json')
+    let jsonObj = JSON.parse(fs.readFileSync(jsonDir, 'utf8'))
+    let opLogin = {
+      method: 'POST',
+      uri: 'http://devicehub.ereuse.net/login',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: {
+        email: process.env.EMAIL_DH,
+        password: process.env.PASS_DH
+      },
+      json: true // Automatically stringifies the body to JSON
+    }
+
+    rp(opLogin).then(loginPost => {
+      let tokenDh = loginPost.token
+      let dbName = loginPost.defaultDatabase
+      let opSnapshot = {
+        method: 'POST',
+        uri: 'http://devicehub.ereuse.net/' + dbName + '/events/devices/snapshot',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Basic ' + tokenDh
+        },
+        body: jsonObj,
+        json: true
+      }
+      console.dir(opSnapshot.body)
+      rp(opSnapshot).then(responseSnapshot => {
+        console.log('snapshot send succesfully')
+      }).catch(showErr) // todo show alert when no internet
+    }).catch(showErr)
   })
 }
+
+/* HOW TO GET JSON FROM DIRECTORY
+Sync:
+var obj = JSON.parse(fs.readFileSync('file', 'utf8'));
+
+Async:
+var obj;
+fs.readFile('file', 'utf8', function (err, data) {
+  if (err) throw err;
+  obj = JSON.parse(data);
+})
+
+EASY WAY USING jsonfile npm module
+
+var jsonfile = require('jsonfile')
+var file = '/tmp/data.json'
+jsonfile.readFile(file, function(err, obj) {
+  console.dir(obj)
+}) */
+
+
 
 /* Example when handled through fs.watch listener
 fs.watch('./tmp', { encoding: 'buffer' }, (eventType, filename) => {
