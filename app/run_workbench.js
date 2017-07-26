@@ -3,16 +3,13 @@ const spawn = remote.require('child_process').spawn
 const path = require('path')
 const fs = require('fs')
 const rp = require('request-promise')
+const notifier = require('node-notifier')
 const dotenv = require('dotenv').config()
 
 // if button click execute erwb
 
 document.getElementById('botoDiag').addEventListener('click', runWorkbench)
 
-/*
- let button = document.createElement('button')
- button.textContent = 'Diagnostic'
- */
 function showErr (err) {
   console.error(err)
 }
@@ -22,14 +19,14 @@ function showErr (err) {
 let workbench = null
 
 function runWorkbench () {
-  workbench = spawn('gksudo', ['-k', 'erwb'])
+  workbench = spawn('gksudo', ['-k', 'erwb --settings /usr/eReuse.org/config1.ini'])
 
   workbench.on('exit', () => {
     console.log(`Child exited wb finished`)
-    console.log(process.env.EMAIL_WB)
-    console.log(process.env.PASS_WB)
-    let jsonDir = path.join(__dirname, 'testwb.json')
-    let jsonObj = JSON.parse(fs.readFileSync(jsonDir, 'utf8'))
+    //let jsonDir = path.join(__dirname, 'testwb.json')
+    //console.log(jsonDir)
+    let jsonObj = JSON.parse(fs.readFileSync('/opt/MyeReuse.org_Support/resources/testwb.json', 'utf8'))
+    console.dir(jsonObj)
     let opLogin = {
       method: 'POST',
       uri: 'http://devicehub.ereuse.net/login',
@@ -43,10 +40,11 @@ function runWorkbench () {
       },
       json: true // Automatically stringifies the body to JSON
     }
-
     rp(opLogin).then(loginPost => {
       let tokenDh = loginPost.token
       let dbName = loginPost.defaultDatabase
+      console.dir(tokenDh)
+      console.log(dbName)
       let opSnapshot = {
         method: 'POST',
         uri: 'http://devicehub.ereuse.net/' + dbName + '/events/devices/snapshot',
@@ -60,23 +58,17 @@ function runWorkbench () {
       }
       console.dir(opSnapshot.body)
       rp(opSnapshot).then(responseSnapshot => {
-        console.log('snapshot send succesfully')
+        console.log('Snapshot send succesfully')
+        notifier.notify({
+          'title': 'Diagnostic',
+          'message': 'Snapshot send succesfully'
+        })
       }).catch(showErr) // todo show alert when no internet
     }).catch(showErr)
   })
 }
 
-/* HOW TO GET JSON FROM DIRECTORY
-Sync:
-var obj = JSON.parse(fs.readFileSync('file', 'utf8'));
-
-Async:
-var obj;
-fs.readFile('file', 'utf8', function (err, data) {
-  if (err) throw err;
-  obj = JSON.parse(data);
-})
-
+/*
 EASY WAY USING jsonfile npm module
 
 var jsonfile = require('jsonfile')
@@ -84,8 +76,6 @@ var file = '/tmp/data.json'
 jsonfile.readFile(file, function(err, obj) {
   console.dir(obj)
 }) */
-
-
 
 /* Example when handled through fs.watch listener
 fs.watch('./tmp', { encoding: 'buffer' }, (eventType, filename) => {
