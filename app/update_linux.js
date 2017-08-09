@@ -1,4 +1,3 @@
-// const remote = require('electron')
 const {spawn, exec} = require('child_process')
 const semver = require('semver')
 const rp = require('request-promise')

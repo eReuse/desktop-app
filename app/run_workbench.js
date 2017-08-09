@@ -1,5 +1,5 @@
-const { remote } = require('electron')
-const spawn = remote.require('child_process').spawn
+// const { remote } = require('electron')
+const spawn = require('child_process').spawn
 const path = require('path')
 const fs = require('fs')
 const rp = require('request-promise')
@@ -24,7 +24,8 @@ function runWorkbench () {
   workbench.on('exit', () => {
     console.log(`Child exited wb finished`)
     //let jsonDir = path.join(__dirname, 'testwb.json')
-    //console.log(jsonDir)
+    // console.log(jsonDir)
+    //let jsonObj = JSON.parse(fs.readFileSync(jsonDir, 'utf8'))
     let jsonObj = JSON.parse(fs.readFileSync('/opt/MyeReuse.org_Support/resources/testwb.json', 'utf8'))
     console.dir(jsonObj)
     let opLogin = {
@@ -35,8 +36,8 @@ function runWorkbench () {
         'Accept': 'application/json'
       },
       body: {
-        email: process.env.EMAIL_DH,
-        password: process.env.PASS_DH
+        email: 'a@a.a',
+        password: '1234'
       },
       json: true // Automatically stringifies the body to JSON
     }

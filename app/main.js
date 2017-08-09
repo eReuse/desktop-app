@@ -1,4 +1,3 @@
-// import updateLinux from 'update_linux'
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
@@ -55,7 +54,7 @@ function createWindow () {
 
   // Open devtools
 
-  // winMain.webContents.openDevTools()
+  winMain.webContents.openDevTools()
 
   winMain.on('closed', () => {
     winMain = null

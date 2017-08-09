@@ -8,11 +8,12 @@
     "postinstall": "install-app-deps",
     "start": "electron .",
     "clear": "rm -r dist",
-    "dist": "npm run dist32 && npm run dist64",
+    "dist": "npm run linux32 && npm run linux64",
     "linux32": "build --linux --ia32 ",
     "linux64": "build --linux --x64",
     "publish": "publish",
     "release64": "npm run linux64 && npm run publish"
+
   },
   "author": {
     "name": "Jordi Nadeu",
