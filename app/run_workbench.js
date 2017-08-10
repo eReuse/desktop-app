@@ -34,7 +34,7 @@ function catchJson () {
 let workbench = null
 
 function runWorkbench () {
-  workbench = spawn('gksudo', ['-k', 'erwb --settings /usr/eReuse.org/config1.ini'])
+  workbench = spawn('gksudo', ['-k', 'erwb'])
 
   workbench.on('exit', () => {
     console.log(`Child exited wb finished`)
@@ -52,8 +52,8 @@ function runWorkbench () {
         'Accept': 'application/json'
       },
       body: {
-        email: 'a@a.a',
-        password: '1234'
+        email: process.env.EMAIL_DH,
+        password: process.env.PWD_DH
       },
       json: true // Automatically stringifies the body to JSON
     }

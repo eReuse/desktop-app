@@ -2,13 +2,19 @@
 
 npm install -g semver request request-promise
 
-#install workbench and requirements
+# Local folder
+mkdir /opt/eReuse.org-Workbench
 
-#git clone https://github.com/Garito/workbench.git
-#cd ./workbench ???
-#pip install -r requirements.txt
-#pip install -r requirements-full.txt
-#sudo apt-get install $(sed -rn 's/.*\bdeb:(.+)$/\1/p' requirements.txt requirements-full.txt)
+cd /opt/eReuse.org-Workbench
+
+#install requirements and workbench
+# Install virtual environment so we don't touch other pythons' packages
+pip install virutalenv
+virtualenv virtualenv  # Create virtualenv configuration in actual dir
+source virtualenv/bin/activate  # Activate virtualenv
+
+pip install setuptools enum34 python-dateutil pySMART pyudev tqdm requests lxml gnupg  # This is installed in virtualenv
+pip install git+https://github.com/eReuse/workbench.git
 
 # Do a root crontab with init.sh every
 

@@ -35,7 +35,21 @@
       "afterInstall": "./scripts/afterInstall.sh",
       "depends": [
         "nodejs",
-        "npm"
+        "npm",
+        "git",
+        "cifs-utils",
+        "dmidecode",
+        "fsarchiver",
+        "gnupg",
+        "grub2-common",
+        "lshw",
+        "python-dmidecode",
+        "smartmontools",
+        "stress",
+        "usbmount",
+        "python-pip",
+        "python-lxml",
+        "python-gnupg"
       ]
     },
     "win": {

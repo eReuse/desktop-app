@@ -9,8 +9,12 @@ const notifier = require('node-notifier')
 let winMain = null // create main window
 let version = app.getVersion()
 
+console.dir(process.env)
+
+//const nameLog = process.env.USERNAME
+const name = process.env.USER
+console.log(name)
 username().then(username => {
-  console.log(username)
   notifier.notify({
     'title': 'DesktopApp',
     'message': 'Your user is ' + username
