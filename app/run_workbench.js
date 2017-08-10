@@ -2,6 +2,7 @@
 const spawn = require('child_process').spawn
 const path = require('path')
 const fs = require('fs')
+const os = require('os')
 const rp = require('request-promise')
 const notifier = require('node-notifier')
 const dotenv = require('dotenv').config()
@@ -14,6 +15,20 @@ function showErr (err) {
   console.error(err)
 }
 
+// fileWatcher on tmp and catch .json
+function catchJson () {
+  // let filePath = os.tmpdir()
+  fs.watch('./tmp', { encoding: 'buffer' }, (eventType, filename) => {
+
+    if (filename) {
+      // si eventType es crea un nou fitxer, comprovar que es .json amb tres , , ,
+      // alhora de pujar-lo mirar el uuid si ja existeix al devicehub
+      // al final borrar el json un cop enviat ok
+      console.log(filename)
+    }
+  })
+}
+
 // Docu login and send json http://devicehub.ereuse.org/
 
 let workbench = null
@@ -23,10 +38,11 @@ function runWorkbench () {
 
   workbench.on('exit', () => {
     console.log(`Child exited wb finished`)
-    //let jsonDir = path.join(__dirname, 'testwb.json')
-    // console.log(jsonDir)
-    //let jsonObj = JSON.parse(fs.readFileSync(jsonDir, 'utf8'))
-    let jsonObj = JSON.parse(fs.readFileSync('/opt/MyeReuse.org_Support/resources/testwb.json', 'utf8'))
+    catchJson()
+    let jsonDir = path.join(__dirname, 'testwb.json')
+    console.log(jsonDir)
+    let jsonObj = JSON.parse(fs.readFileSync(jsonDir, 'utf8'))
+    //let jsonObj = JSON.parse(fs.readFileSync('/opt/MyeReuse.org_Support/resources/testwb.json', 'utf8'))
     console.dir(jsonObj)
     let opLogin = {
       method: 'POST',
@@ -76,14 +92,4 @@ var jsonfile = require('jsonfile')
 var file = '/tmp/data.json'
 jsonfile.readFile(file, function(err, obj) {
   console.dir(obj)
-}) */
-
-/* Example when handled through fs.watch listener
-fs.watch('./tmp', { encoding: 'buffer' }, (eventType, filename) => {
-  if (filename) {
-    // si eventType es crea un nou fitxer, comprovar que es .json amb tres , , ,
-    // alhora de pujar-lo mirar el uuid si ja existeix al devicehub
-    // al final borrar el json un cop enviat ok
-    console.log(filename)
-  }
 }) */
