@@ -1,8 +1,6 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
-const username = require('username')
-const dotenv = require('dotenv').config()
 const updateLinux = require('./update_linux')
 const notifier = require('node-notifier')
 
@@ -12,13 +10,11 @@ let version = app.getVersion()
 //const nameLog = process.env.USERNAME
 const name = process.env.USER
 console.log(name)
-username().then(username => {
-  notifier.notify({
-    'title': 'DesktopApp',
-    'message': 'Your user is ' + username
-  })
-  // document.getElementById('user').textContent(username)
+notifier.notify({
+  'title': 'DesktopApp',
+  'message': 'Your user is ' + name
 })
+  // document.getElementById('user').textContent(username)
 
 /*
 updater.on('update-downloaded', (event) => {

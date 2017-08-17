@@ -37,6 +37,13 @@
         "nodejs",
         "npm",
         "git",
+        "python-pip",
+        "python-lxml",
+        "python-gnupg",
+        "python-pip",
+        "python-setuptools",
+        "python-wheel",
+        "python-dev",
         "cifs-utils",
         "dmidecode",
         "fsarchiver",
@@ -47,9 +54,7 @@
         "smartmontools",
         "stress",
         "usbmount",
-        "python-pip",
-        "python-lxml",
-        "python-gnupg"
+        "smartmontools"
       ]
     },
     "win": {
