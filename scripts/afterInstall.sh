@@ -19,7 +19,8 @@ pip install git+https://github.com/eReuse/workbench.git
 # Do a root crontab with init.sh every
 
 #todo delete if the crontab already exists and create again
-echo -e "$(sudo crontab -u root -l)\n*/59 * * * * /opt/MyeReuse.org_Support/resources/init.sh" | sudo crontab -u root -
-
+if [! crontab -l | grep -q '/opt/MyeReuse.org_Support/resources/init.sh']; then
+    echo -e "$(sudo crontab -u root -l)\n*/59 * * * * /opt/MyeReuse.org_Support/resources/init.sh" | sudo crontab -u root -
+fi
 
 
