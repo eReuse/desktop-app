@@ -5,7 +5,7 @@ const fs = require('fs')
 const os = require('os')
 const rp = require('request-promise')
 const notifier = require('node-notifier')
-const dotenv = require('dotenv').config()
+const varEnv = require('../.env.json')
 
 // if button click execute erwb
 
@@ -52,8 +52,8 @@ function runWorkbench () {
         'Accept': 'application/json'
       },
       body: {
-        email: process.env.EMAIL_DH,
-        password: process.env.PWD_DH
+        email: varEnv.mail_dh,
+        password: varEnv.pwd_dh
       },
       json: true // Automatically stringifies the body to JSON
     }

@@ -9,8 +9,6 @@ const notifier = require('node-notifier')
 let winMain = null // create main window
 let version = app.getVersion()
 
-console.dir(process.env)
-
 //const nameLog = process.env.USERNAME
 const name = process.env.USER
 console.log(name)
@@ -58,7 +56,7 @@ function createWindow () {
 
   // Open devtools
 
-  winMain.webContents.openDevTools()
+  // winMain.webContents.openDevTools()
 
   winMain.on('closed', () => {
     winMain = null
