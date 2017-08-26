@@ -9,12 +9,12 @@ let version = app.getVersion()
 
 //const nameLog = process.env.USERNAME
 const name = process.env.USER
+// eslint-disable-next-line no-console
 console.log(name)
 notifier.notify({
   'title': 'DesktopApp',
   'message': 'Your user is ' + name
 })
-  // document.getElementById('user').textContent(username)
 
 /*
 updater.on('update-downloaded', (event) => {
@@ -51,8 +51,7 @@ function createWindow () {
   })
 
   // Open devtools
-
-  // winMain.webContents.openDevTools()
+  winMain.webContents.openDevTools()
 
   winMain.on('closed', () => {
     winMain = null

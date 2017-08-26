@@ -2,28 +2,12 @@ const spawn = require('child_process').spawn
 const path = require('path')
 const fs = require('fs')
 const os = require('os')
-const rp = require('request-promise')
 const notifier = require('node-notifier')
-const varEnv = require('../.env.json')
-const deviceHub = require('./server')
+const DeviceHub = require('./server')
 
 // if button click execute erwb
 
 document.getElementById('botoDiag').addEventListener('click', runWorkbench)
-
-function runWorkbench() {
-  new Workbench()
-}
-
-function showErr (err) {
-  console.error(err)
-}
-
-
-
-class Workbench {
-  static runWorkbench()
-}
 
 // Docu login and send json http://devicehub.ereuse.org/
 
@@ -33,41 +17,34 @@ function runWorkbench () {
   workbench = spawn('gksudo', ['-k', 'erwb'])
 
   workbench.on('exit', () => {
-    console.log(`Child exited wb finished`)
+    console.log('Child exited wb finished')
     const filePath = os.tmpdir()
     console.log(filePath)
-    fs.watch(filePath, { encoding: 'string' }, (eventType, filename) => {
-      if (event ==='rename') {
+    fs.watch(filePath, (eventType, filename) => {
+      if (eventType === 'rename') {
+        let snapshot
         try {
           const text = fs.readFileSync(filename, 'utf8')
-          const snapshot = JSON.parse(text)
-          snapshot.software = 'DesktopApp'
+          snapshot = JSON.parse(text)
+          snapshot.snapshotSoftware = 'DesktopApp'
         } catch (err) {
-          throw //break
+          console.error(err)
+          return
         }
-        deviceHub.post('events/devices/snapshot', snapshot).then(response => {
+        DeviceHub.post('events/devices/snapshot', snapshot).then(response => {
           // tot ok el snapshot s'ha creat
           notifier.notify({
             'title': 'Diagnostic',
             'message': 'Snapshot send succesfully'
           })
-
-        }).catch((reponse) => {
+          console.dir(response)
+        }).catch((err) => {
+          console.dir(err)
           // no ha fet login
           // problema amb snapshot
           // uuid
         })
-
-        if (filename) {
-          try {
-            snapshot = JSON.parse(filename)
-          } catch(err){
-            // is not or json
-          }
-          // si eventType es crea un nou fitxer, comprovar que es .json amb tres , , ,
-          // alhora de pujar-lo mirar el uuid si ja existeix al devicehub
-          // al final borrar el json un cop enviat ok
-          console.log(filename)
-        }
       }
     })
+  })
+}

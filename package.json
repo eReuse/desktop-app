@@ -1,7 +1,7 @@
 {
   "name": "eReuse.org-DesktopApp",
   "productName": "My eReuse.org & Support",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Support PC and report incidents, and also show information about eReuse.org and the social contribution with usage of this computer",
   "main": "app/main.js",
   "scripts": {
@@ -26,7 +26,8 @@
     "appId": "tools.ereuse.org.support",
     "linux": {
       "target": [
-        "deb"
+        "deb",
+        "AppImage"
       ],
       "category": "System",
       "icon": "./build/icons"
@@ -84,7 +85,8 @@
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
     "semver": "^5.3.0",
-    "username": "^3.0.0"
+    "username": "^3.0.0",
+    "promise": "latest"
   },
   "devDependencies": {
     "chai": "^4.1.1",
@@ -97,5 +99,27 @@
     "eslint-plugin-standard": "^3.0.1",
     "mocha": "^3.5.0",
     "spectron": "^3.7.2"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es6": true,
+      "node": true
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+      "indent": [
+        "error",
+        2
+      ],
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "semi": [
+        "error",
+        "never"
+      ]
+    }
   }
 }

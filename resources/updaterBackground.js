@@ -17,9 +17,9 @@ const localVersion = '1.0.0' // todo fix automatic localversion
 
 var optionsJson = {
   uri: 'https://raw.githubusercontent.com/eReuse/desktop-app/master/package.json',
-  headers: {
-    'User-Agent': 'Request-Promise'
-  },
+headers: {
+  'User-Agent': 'Request-Promise'
+},
   json: true // Automatically parses the JSON string in the response
 }
 // get last packages.json version
@@ -27,7 +27,7 @@ rp(optionsJson).then(function getLastPackageVersion (infoapp) {
   githubMeta.name = infoapp.name
   githubMeta.version = infoapp.version
   var tag = githubMeta.platform + '-' + githubMeta.arch + '-' + githubMeta.version // todo publish with tag=linux-x64-1.0.0
-  var installer = githubMeta.name + '_' + githubMeta.version + '.deb' // installer: eReuse.org-DesktopApp_1.0.0.deb
+  var installer = githubMeta.name + '_' + githubMeta.version + '_' + githubMeta.arch + '.deb' // installer: eReuse.org-DesktopApp_1.0.0_x64.deb
   var urlRelease = 'https://github.com/eReuse/desktop-app/releases/download/' + tag + '/' + installer
   if (!semver.gt(githubMeta.version, localVersion)) {
     console.log('You have the last version ' + githubMeta.version + ' el local version es: ' + localVersion)

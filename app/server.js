@@ -1,12 +1,14 @@
 const _ = require('lodash')
 const varEnv = require('../.env.json')
-const Promise = require('promi')
+const rp = require('request-promise')
+const Promise = require('promise')
+
 /**
  *
- * @returns {Server}
+ * @returns {DeviceHub}
  * @private
  */
-function _deviceHub () {
+function deviceHub () {
   const BASE_URL = 'http://devicehub.ereuse.net/'
   const method = {
     headers: {
@@ -37,7 +39,7 @@ function _deviceHub () {
      * @return Promise - promise with the account
      * @private
      */
-    _login_if_needed() {
+    static _login_if_needed () {
       if (!_.isNull(login_promise)) {
         const body = {
           email: varEnv.mail_dh,
@@ -59,7 +61,7 @@ function _deviceHub () {
      * @return Promise
      * @private
      */
-    _post(uri, body, db=null) {
+    static _post (uri, body, db = null) {
       const _method = _.clone(method)
       _method.url = db ? BASE_URL + db + '/' + uri : BASE_URL + uri
       _method.body = body
@@ -67,8 +69,8 @@ function _deviceHub () {
       return rp(_method)
     }
   }
- return DeviceHub
+
+  return DeviceHub
 }
 
-
-module.exports = _deviceHub()
+module.exports = deviceHub()
