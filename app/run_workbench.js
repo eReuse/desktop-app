@@ -14,7 +14,7 @@ document.getElementById('botoDiag').addEventListener('click', runWorkbench)
 let workbench = null
 
 function runWorkbench () {
-  workbench = spawn('gksudo', ['-k', 'erwb'])
+  workbench = spawn('gksudo', ['-k', '/opt/MyeReuse.org_Support/eReuse.org-Workbench/workbench/scripts/erwb-devel'])
 
   workbench.on('exit', () => {
     console.log('Child exited wb finished')
@@ -35,7 +35,7 @@ function runWorkbench () {
           // tot ok el snapshot s'ha creat
           notifier.notify({
             'title': 'Diagnostic',
-            'message': 'Snapshot send succesfully'
+            'message': 'Snapshot send successfully'
           })
           console.dir(response)
         }).catch((err) => {

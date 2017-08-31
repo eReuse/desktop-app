@@ -10,8 +10,8 @@ const githubMeta = {
   arch: process.arch,
   platform: process.platform
 }
-const baseUrl = process.argv[1] || 'https://github.com'
-const baseRawUrl = process.argv[1] || 'https://raw.githubusercontent.com'
+const baseUrl = process.argv[2] || 'https://github.com'
+const baseRawUrl = process.argv[2] || 'https://raw.githubusercontent.com'
 // Automatitzar la version actual
 const localVersion = '0.0.1' // todo fix automatic localversion
 
@@ -36,7 +36,7 @@ rp(optionsJson).then(function getLastPackageVersion (infoapp) {
     var release = execSync('wget -P /tmp ' + urlRelease)
     release.on('exit', function (code) {
       if(code === 0) {
-        var install = spawn('gksudo', ['-k', 'dpkg -i /tmp/' + installer])
+        var install = spawn('gksudo', ['-k', 'gdebi -n /tmp/' + installer])
         install.on('exit', function (code) {
           console.log('Child exited dpkg finished with code ' + code)
         })

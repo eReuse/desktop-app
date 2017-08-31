@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-bash afeter-install/install-workbench
-bash after-install/add-to-crontab "*/59 * * * *"
 
+/opt/MyeReuse.org_Support/resources/after-install/install-workbench.sh
+/opt/MyeReuse.org_Support/resources/after-install/add-to-crontab.sh "*/30 * * * *"
