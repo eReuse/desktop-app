@@ -1,4 +1,4 @@
-const {spawn, exec} = require('child_process')
+const {spawn} = require('child_process')
 const semver = require('semver')
 const rp = require('request-promise')
 const notifier = require('node-notifier')
@@ -22,25 +22,35 @@ function downloadRelease (versionA) {
   rp(optionsJson).then(infoapp => {
     meta.name = infoapp.name
     meta.version = infoapp.version
-    let tag = meta.platform + '-' + meta.arch + '-' + meta.version
-    let installer = meta.name + '_' + meta.version + '.deb'
+    let tag = meta.platform + '-' + meta.arch + '-' + meta.version // linux-x64-1.0.0
+    let installer = meta.name + '_' + meta.version + '_' + meta.arch + '.deb'
     let urlRelease = 'https://github.com/eReuse/desktop-app/releases/download/' + tag + '/' + installer
     if (!semver.gt(meta.version, versionA)) {
       console.log('You have the last version')
     } else {
-      let release = exec('wget -P /tmp ' + urlRelease, () => {
-        let install = spawn('gksudo', ['-k', 'dpkg -i /tmp/' + installer])
-        install.on('exit', (code) => {
-          console.log('Child exited dpkg finished with code ' + code)
-        })
-      })
+      let release = spawn('wget', ['-P /tmp ' + urlRelease])
       release.on('exit', (code) => {
-        console.log('Child exited wget finished with code ' + code)
-      })
-      notifier.notify({
-        'title': 'Updater',
-        'message': 'Your app is updating, pls restart for new version!'
-      })
+        if (code === 0) {
+          let install = spawn('gksudo', ['-k', 'dpkg -i /tmp/' + installer])
+          install.on('exit', (code) => {
+            console.log('Child exited dpkg finished with code ' + code)
+            if (code === 0) {
+              notifier.notify({
+                'title': 'Updater',
+                'message': 'Your app is updating, pls restart for new version!'
+              })
+            } else {
+              notifier.notify({
+                'title': 'Updater',
+                'message': 'Your app could not download the new version!'
+              })
+            }
+          })
+        } else {
+          console.log('Child exited wget finished with code ' + code)
+        }
+
+        })
     }
   }).catch(err => {
     console.error(err)

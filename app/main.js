@@ -1,21 +1,19 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
-const username = require('username')
-const dotenv = require('dotenv').config()
 const updateLinux = require('./update_linux')
 const notifier = require('node-notifier')
 
 let winMain = null // create main window
 let version = app.getVersion()
 
-username().then(username => {
-  console.log(username)
-  notifier.notify({
-    'title': 'DesktopApp',
-    'message': 'Your user is ' + username
-  })
-  // document.getElementById('user').textContent(username)
+//const nameLog = process.env.USERNAME
+const name = process.env.USER
+// eslint-disable-next-line no-console
+console.log(name)
+notifier.notify({
+  'title': 'DesktopApp',
+  'message': 'Your user is ' + name
 })
 
 /*
@@ -53,7 +51,6 @@ function createWindow () {
   })
 
   // Open devtools
-
   winMain.webContents.openDevTools()
 
   winMain.on('closed', () => {

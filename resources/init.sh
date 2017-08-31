@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 #executar node
-
-nodejs ./updaterBackground.js
+touch /opt/MyeReuse.org_Support/crontabworks.txt
+nodejs ./updaterBackground.js $1

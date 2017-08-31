@@ -2,36 +2,68 @@
 
 The eReuse.org Desktop-App is an electron app supporting help-desk incidents ocurred on desktops and laptops.
 
+
 ## Features
 
+
++ Technologies:
+
+        Electron
+        Node JS
+        Bash
+
++ Environment:
+
+        NPM
+        Node.js
+
+-----------------------------------------------------
+
+    * Debian packages (deb) [for now]
+
+    * Take a Snapshot (Workbench) and sent to DeviceHub
+
+    * Visit www.eReuse.org
 
 
 ## Installation
 
-First create a new folder, then download and put all files of github repository in the folder, finally within that folder run on terminal:
+If you're used to use git clone,
+this method is for you.
 
-* To install the dependencies and devDependencies:
+#### Quickstart:
 
-    > $ npm install
+1. `git clone https://github.com/eReuse/desktop-app.git`
+2. `cd desktop-app`
+3. `npm install`
+4. Configure `env-sample.json` and rename it to `env.json`
 
-* For run the app:
 
-    > $ npm start
++ Clone all the files of github repository in a desktop-app folder,
+  within that folder run afterInstall.sh for install a
 
-* To build and generate executables (AppImage) for x64 and ia32:
+        > $ git clone https://github.com/eReuse/desktop-app.git
 
-    > $ npm run dist
+        > $ cd desktop-app
 
-    - Only Linux x64 arch:
+        > $ sudo ./afterInstall.sh
 
-        > $ npm run dist64
+* To install the dependencies and devDependencies
 
-    - Only Linux ia32 arch:
+        > $ npm install
 
-        > $ npm run dist32
+* For run the app
 
-* To build and publish a new release for x64 or ia32, execute respecticly:
+        > $ npm start
 
-    > $npm run release64 -- -- --transport-token<Your Github API Token>
+* To build and generate executables (deb) for x64 and ia32
 
-    > $npm run release32 -- -- --transport-token<Your Github API Token>
+        > $ npm run dist
+
+    - Only Linux x64 arch
+
+            > $ npm run linux64
+
+    - Only Linux ia32 arch
+
+            > $ npm run linux32
