@@ -1,4 +1,4 @@
-const {spawn, exec} = require('child_process')
+const {spawn} = require('child_process')
 const semver = require('semver')
 const rp = require('request-promise')
 const notifier = require('node-notifier')
@@ -30,11 +30,11 @@ function downloadRelease (versionA) {
     } else {
       let release = spawn('wget', ['-P /tmp ' + urlRelease])
       release.on('exit', (code) => {
-        if (code === 1) {
+        if (code === 0) {
           let install = spawn('gksudo', ['-k', 'dpkg -i /tmp/' + installer])
           install.on('exit', (code) => {
             console.log('Child exited dpkg finished with code ' + code)
-            if (code === 1) {
+            if (code === 0) {
               notifier.notify({
                 'title': 'Updater',
                 'message': 'Your app is updating, pls restart for new version!'
