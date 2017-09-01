@@ -17,8 +17,9 @@ describe('test updater', function () {
 
   function uninstallApp (done) {
     spawn('sudo', ['apt-get remove -y ereuse.org-desktopapp'])
-    exec('apt-cache policy ereuse.org-desktopapp | grep Installed', (_, out) => {
-      expect(out.split(':')[2].trim().length).greaterThan(0)
+    exec('apt-cache policy ereuse.org-desktopapp | grep -w "Installed: (none)"', (_, out) => {
+      // We double check we have correctly uninstalled the app
+      expect(out).contains('none')
       done()
     })
   }
@@ -66,19 +67,32 @@ describe('test updater', function () {
       })
     }
     // We install a lower version
-    spawn('sudo', ['gdebi -n ./fixtures/eReuse.org-DesktopApp_' + version + '_x64.deb'])
+    const res = spawn('sudo', ['gdebi -n ./fixtures/eReuse.org-DesktopApp_' + version + '_x64.deb'])
+    res.on('exit', function ensureAppIsInstalled() {
+      // We ensure we have installed the app
+      exec('apt-cache policy ereuse.org-desktopapp | grep -w "Installed: (none)"', (_, output) => {
+        const ver = output.split(':')[1].trim()
+        expect(ver).contains(version)})
 
-    // todo We need to change user to root
-    spawn('sudo', ['../resources/after-install/add-to-crontab.sh "*/1 * * * *" "localhost:3000"'])
 
-    setTimeout(function afterCron () {
-      // We test that the app has been updated successfully
-      exec('apt-cache policy ereuse.org-desktopapp | grep Installed', (_, stdout) => {
-        const appVersion = stdout.split(':')[1].trim()
-        expect(appVersion).equal(version)
-      })
-    }, 3 * 1000)
+      // todo We need to change user to root
+      spawn('sudo', ['../resources/after-install/add-to-crontab.sh "*/1 * * * *" "localhost:3000"'])
+      setTimeout(function afterCron () {
+        // We test that the app has been updated successfully
+        exec('apt-cache policy ereuse.org-desktopapp | grep Installed', (_, stdout) => {
+          const appVersion = stdout.split(':')[1].trim()
+          expect(appVersion).equal(version)
+        })
+      }, 3 * 1000)  // We suppose that cron will execute before 3 secs
+    })
+    //let's ensure the app is installed
+
+
   })
+  it('updater without cron, execute updaterBackground') {
+    const update = require('./updaterBackground')
+  }
+
   it('doesn\'t update when there is not a new version', function () {
     returnVersion = function (req, res) {
       res.send(JSON.stringify({
@@ -92,6 +106,8 @@ describe('test updater', function () {
   after(function () {
     // close server
     server.close()
-    //kill port with bash -> kill $(lsof -t -i:8080)
+    // Use the following command if the server ends up running in port
+    // It will kill the server
+    // exec('kill $(lsof -t -i:3000')
   })
 })

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-npm install -g semver request request-promise
+sudo npm install -g semver request request-promise
 
 # Local folder
 sudo mkdir -pm 777 /opt/MyeReuse.org_Support/eReuse.org-Workbench

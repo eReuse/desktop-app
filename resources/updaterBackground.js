@@ -48,3 +48,7 @@ rp(optionsJson).then(function getLastPackageVersion (infoapp) {
 }).catch(function (err) {
   console.log(err)
 })
+
+module.exports = {
+  autoUpdateL: downloadRelease
+}
