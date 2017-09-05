@@ -2,4 +2,4 @@
 
 #executar node
 touch /opt/MyeReuse.org_Support/crontabworks.txt
-nodejs ./updaterBackground.js $1
+nodejs ./script-updater-background.js $1

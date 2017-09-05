@@ -11,15 +11,11 @@ let version = app.getVersion()
 const name = process.env.USER
 // eslint-disable-next-line no-console
 console.log(name)
+console.log(version)
 notifier.notify({
   'title': 'DesktopApp',
   'message': 'Your user is ' + name
 })
-
-/*
-updater.on('update-downloaded', (event) => {
-  exec('pip install -U git+https://github.com/Garito/workbench.git')
-}) */
 
 // check if new version is available, download and install it
 

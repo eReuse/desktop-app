@@ -1,54 +1,67 @@
-#!/usr/local/bin/nodejs
+#!/usr/bin/nodejs // node 4.2.6
+const childProcess = require('child_process')
+const semver = require('semver') // /usr/local/lib/node_modules/semver/bin/semver
+const rp = require('request-promise')
+const fs = require('fs')
+const Promise = require('promise')
 
-const {spawn, execSync}  = require('child_process')
-const semver = require('/usr/local/lib/node_modules/semver') // /usr/local/lib/node_modules/semver/bin/semver
-const rp = require('/usr/local/lib/node_modules/request-promise')
+const EXEC_ENCODING = {encoding: 'UTF-8'}
 
-const githubMeta = {
-  name: null,
-  version: null, // todo get this from app
-  arch: process.arch,
-  platform: process.platform
-}
-const baseUrl = process.argv[2] || 'https://github.com'
-const baseRawUrl = process.argv[2] || 'https://raw.githubusercontent.com'
-// Automatitzar la version actual
-const localVersion = '0.0.1' // todo fix automatic localversion
-
-const optionsJson = {
-  uri: baseRawUrl + '/eReuse/desktop-app/master/package.json',
-  headers: {
-    'User-Agent': 'Request-Promise'
-  },
-  json: true // Automatically parses the JSON string in the response
-}
+function updateIfNewerVersion (baseUrl, baseRawUrl, branch, arch, version) {
+  baseUrl = baseUrl || 'https://github.com'
+  baseRawUrl = baseRawUrl || 'https://raw.githubusercontent.com'
+  branch = branch || 'master'
+  const localVersion = version || getLocalVersion()
+  const optionsJson = {
+    // github does not honor Accept: application/json
+    uri: baseRawUrl + '/eReuse/desktop-app/' + branch +'/package.json',
+  }
 
 // get last packages.json version
-rp(optionsJson).then(function getLastPackageVersion (infoapp) {
-  githubMeta.name = infoapp.name
-  githubMeta.version = infoapp.version
-  var tag = githubMeta.platform + '-' + githubMeta.arch + '-' + githubMeta.version // todo publish with tag=linux-x64-1.0.0
-  var installer = githubMeta.name + '_' + githubMeta.version + '_' + githubMeta.arch + '.deb' // installer: eReuse.org-DesktopApp_1.0.0_x64.deb
-  var urlRelease = baseUrl + '/eReuse/desktop-app/releases/download/' + tag + '/' + installer
-  if (!semver.gt(githubMeta.version, localVersion)) {
-    console.log('You have the last version ' + githubMeta.version + ' el local version es: ' + localVersion)
-  } else {
-    var release = execSync('wget -P /tmp ' + urlRelease)
-    release.on('exit', function (code) {
-      if(code === 0) {
-        var install = spawn('gksudo', ['-k', 'gdebi -n /tmp/' + installer])
-        install.on('exit', function (code) {
-          console.log('Child exited dpkg finished with code ' + code)
-        })
-      } else {
-        console.log('Child exited wget finished with code ' + code)
-      }
-    })
-  }
-}).catch(function (err) {
-  console.log(err)
-})
+  return new Promise(function (fulfill, reject) {
+    rp(optionsJson).then(function getLastPackageVersion (json) {
+      const infoApp = JSON.parse(json)
+      const app = {
+        name: infoApp.name,
+        version: infoApp.version, // todo get this from app
+        arch: arch || process.arch, // ia32 or x64
+        platform: process.platform,
 
-module.exports = {
-  autoUpdateL: downloadRelease
+      }
+      if (semver.gt(app.version, localVersion)) {
+        console.log('New version ' + app.version + '.')
+
+        // todo publish with tag=linux-x64-1.0.0
+        const tag = app.platform + '-' + app.arch + '-' + app.version
+        const installer = app.name + '_' + app.version + '_' + app.arch + '.deb'
+
+        const reqDeb = {
+          uri: baseUrl + '/eReuse/desktop-app/releases/download/' + tag + '/' + installer,
+          encoding: null
+        }
+        rp(reqDeb).then(function (response) {
+          const path = '/tmp/' + installer
+          fs.writeFileSync(path, response)
+
+          console.log('Installing...')
+          const stdout = childProcess.execSync('gdebi --n ' + path, EXEC_ENCODING)
+          if (!stdout.includes('Done')) reject('Couldn\'t install: ' + stdout)
+        }).catch(reject)
+      } else {
+        console.log('There is not an update (your version: ' + localVersion + ', repo version: ' + app.version + ').')
+      }
+    }).catch(reject)
+  }).catch(function (err) {
+    console.error('There is an error, check the log.')
+    require('fs').writeFileSync('/tmp/desktop-app-error.txt', err)
+  })
 }
+
+function getLocalVersion () {
+  const command = 'apt-cache policy ereuse.org-desktopapp | grep -w "Installed:"'
+  const localVersion = childProcess.execSync(command, EXEC_ENCODING).split(':')[1].trim()
+  return semver.valid(localVersion) ? localVersion : '0.0.0'
+}
+
+module.exports = updateIfNewerVersion
+
