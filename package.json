@@ -1,9 +1,9 @@
 {
   "name": "eReuse.org-DesktopApp",
   "productName": "My eReuse.org & Support",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Support PC and report incidents, and also show information about eReuse.org and the social contribution with usage of this computer",
-  "main": "app/main.js",
+  "main": "app/main.js"
   "scripts": {
     "postinstall": "install-app-deps",
     "start": "electron .",
