@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo npm install -g semver request request-promise
+sudo npm install -g semver request request-promise promise
 
 # Local folder
 sudo mkdir -pm 777 /opt/MyeReuse.org_Support/eReuse.org-Workbench
@@ -12,5 +12,3 @@ pip install setuptools enum34 python-dateutil pySMART pyudev tqdm requests lxml 
 git clone https://github.com/Garito/workbench.git
 cd workbench
 sudo ./scripts/erwb-devel
-#pip install -e .
-#sudo ./scripts/erwb

@@ -1,7 +1,6 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
-const updateLinux = require('./update_linux')
 const notifier = require('node-notifier')
 
 let winMain = null // create main window
@@ -9,17 +8,12 @@ let version = app.getVersion()
 
 //const nameLog = process.env.USERNAME
 const name = process.env.USER
-// eslint-disable-next-line no-console
 console.log(name)
 console.log(version)
 notifier.notify({
   'title': 'DesktopApp',
   'message': 'Your user is ' + name
 })
-
-// check if new version is available, download and install it
-
-updateLinux.autoUpdateL(version)
 
 function createWindow () {
   // Create browser window
