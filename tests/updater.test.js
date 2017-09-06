@@ -1,17 +1,15 @@
 const expect = require('chai').expect
 const path = require('path')
-const exec = require('child_process').exec
-const spawn = require('child_process').spawn
+const spawnSync = require('child_process').spawnSync
+const {exec, spawn} = require('child_process')
 const mocha = require('mocha')
 const describe = mocha.describe
-const before = mocha.before
-const after = mocha.after
-const beforeEach = mocha.beforeEach
-const afterEach = mocha.afterEach
+const {before, after} = require('mocha')
+const {beforeEach, afterEach}= mocha
 const it = mocha.it
 // process.env.NODE_ENV = 'testing'
 
-describe('test updater', function () {
+describe('Test Updater', function () {
   this.timeout(5000)
   let app, server
 
@@ -31,8 +29,8 @@ describe('test updater', function () {
   }
 
   function uninstallApp (done) {
-    spawn('apt-get', ['remove', '-y', 'ereuse.org-desktopapp'])
-    //spawn('sudo', ['apt-get remove -y ereuse.org-desktopapp'])
+    //execSync('gksudo apt-get remove ereuse.org-desktopapp -y')
+    spawnSync('gksudo', ['-k','apt-get remove -y ereuse.org-desktopapp'])
     exec('apt-cache policy ereuse.org-desktopapp | grep -w "Installed: (none)"', (_, out) => {
       // We double check we have correctly uninstalled the app
       expect(out).contains('none')
@@ -55,7 +53,7 @@ describe('test updater', function () {
     })
   })
 
-  //beforeEach(uninstallApp)
+  beforeEach(uninstallApp)
 
   it('updates when there is a newer version', function (done) {
     this.timeout(0)
