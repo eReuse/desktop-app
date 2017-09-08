@@ -12,7 +12,6 @@ function generateAndSubmitSnapshot () {
   execSync('gksudo -k /opt/MyeReuse.org_Support/eReuse.org-Workbench/workbench/scripts/erwb-devel')
   console.log('Child exited wb finished')
   const filePath = path.join(os.tmpdir(), '*.json')
-  console.log(filePath)
   chokidar.watch(filePath).on('add', path => {
     let snapshot
     try {
@@ -29,13 +28,11 @@ function generateAndSubmitSnapshot () {
         'title': 'Diagnostic',
         'message': 'Snapshot send successfully'
       })
-      console.dir(response)
     }).catch((err) => {
       console.error(err)
-
       // no ha fet login
       // problema amb snapshot
-      // uuid
+      // uuid check errors
     })
   })
 }

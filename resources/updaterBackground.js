@@ -31,8 +31,8 @@ function updateIfNewerVersion (baseUrl, baseRawUrl, branch, arch, version) {
       if (semver.gt(app.version, localVersion)) {
         console.log('New version ' + app.version + '.')
 
-        // todo publish with tag=linux-x64-1.0.0
-        const tag = app.platform + '-' + app.arch + '-' + app.version
+        // todo publish with tag=linux-1.0.0
+        const tag = app.platform + '-' + app.version
         const installer = app.name + '_' + app.version + '_' + app.arch + '.deb'
 
         const reqDeb = {

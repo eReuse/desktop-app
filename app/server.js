@@ -40,7 +40,7 @@ function deviceHub () {
      * @private
      */
     static _login_if_needed () {
-      if (!_.isNull(login_promise)) {
+      if (_.isNull(login_promise)) {
         const body = {
           email: varEnv.mail_dh,
           password: varEnv.pwd_dh
