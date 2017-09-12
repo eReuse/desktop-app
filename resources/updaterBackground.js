@@ -1,6 +1,6 @@
 #!/usr/bin/nodejs // node 4.2.6
 const EXEC_ENCODING = {encoding: 'UTF-8'}
-const PATH_NODE_MODULES = '/usr/local/lib/node_modules'
+const PATH_NODE_MODULES = '/usr/local/lib/node_modules/'
 const childProcess = require('child_process')
 const fs = require('fs')
 const semver = require(PATH_NODE_MODULES + 'semver') // /usr/local/lib/node_modules/semver/bin/semver
@@ -58,8 +58,10 @@ function updateIfNewerVersion (baseUrl, baseRawUrl, branch, arch, version) {
   })
 }
 
+// grep -w "Instaŀlat:" change depends on which language
+
 function getLocalVersion () {
-  const command = 'apt-cache policy ereuse.org-desktopapp | grep -w "Installed:"'
+  const command = 'apt-cache policy ereuse.org-desktopapp | grep -w "Instaŀlat:"'
   const localVersion = childProcess.execSync(command, EXEC_ENCODING).split(':')[1].trim()
   return semver.valid(localVersion) ? localVersion : '0.0.0'
 }

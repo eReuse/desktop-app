@@ -1,5 +1,4 @@
 #!/bin/bash
 
-# executar node
-touch /opt/MyeReuse.org_Support/crontabworks.txt
+# execute node script
 nodejs ./script-updater-background.js $1

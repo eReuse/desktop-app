@@ -9,6 +9,8 @@ const {beforeEach, afterEach}= mocha
 const it = mocha.it
 // process.env.NODE_ENV = 'testing'
 
+// ask about path change and env, how to execute like a root
+
 describe('Test Updater', function () {
   this.timeout(5000)
   let app, server
