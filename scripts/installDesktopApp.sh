@@ -2,8 +2,10 @@
 
 #Download bash script afterInstall.sh to install Workbench with necessary dependencies and add a cron to autoupdate the app
 
+ver=$1
+arch=$2
 ##
-wget -P /tmp https://github.com/eReuse/desktop-app/releases/download/linux-x64-1.0.0/eReuse.org-DesktopApp_1.0.0_x64.deb
+wget -P /tmp https://github.com/eReuse/desktop-app/releases/download/linux-$ver/eReuse.org-DesktopApp_$ver'_'$arch.deb
 
 #wget https://github.com/eReuse/desktop-app/releases/download/linux-x64-1.0.0/eReuse.org-DesktopApp_1.0.0_x64.deb
 

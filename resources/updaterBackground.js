@@ -1,11 +1,12 @@
 #!/usr/bin/nodejs // node 4.2.6
-const childProcess = require('child_process')
-const semver = require('semver') // /usr/local/lib/node_modules/semver/bin/semver
-const rp = require('request-promise')
-const fs = require('fs')
-const Promise = require('promise')
-
 const EXEC_ENCODING = {encoding: 'UTF-8'}
+const PATH_NODE_MODULES = '/usr/local/lib/node_modules'
+const childProcess = require('child_process')
+const fs = require('fs')
+const semver = require(PATH_NODE_MODULES + 'semver') // /usr/local/lib/node_modules/semver/bin/semver
+const rp = require(PATH_NODE_MODULES + 'request-promise')
+const Promise = require(PATH_NODE_MODULES + 'promise')
+
 
 function updateIfNewerVersion (baseUrl, baseRawUrl, branch, arch, version) {
   baseUrl = baseUrl || 'https://github.com'

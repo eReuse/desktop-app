@@ -9,7 +9,7 @@ const DeviceHub = require('../server')
 // Documentation login and send json http://devicehub.ereuse.org/
 
 function generateAndSubmitSnapshot () {
-  execSync('gksudo -k /opt/MyeReuse.org_Support/eReuse.org-Workbench/workbench/scripts/erwb-devel')
+  execSync('gksudo -k /opt/MyeReuse.org_Support/eReuse.org-Workbench/workbench/scripts/erwb')
   console.log('Child exited wb finished')
   const filePath = path.join(os.tmpdir(), '*.json')
   chokidar.watch(filePath).on('add', path => {
@@ -30,8 +30,8 @@ function generateAndSubmitSnapshot () {
       })
     }).catch((err) => {
       console.error(err)
-      // no ha fet login
-      // problema amb snapshot
+      // no login
+      // problems with snapshot
       // uuid check errors
     })
   })
