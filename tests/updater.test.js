@@ -15,7 +15,7 @@ describe('Test Updater', function () {
   this.timeout(5000)
   let app, server
 
-  let version = '0.0.1'
+  let version = '0.1.0'
   let returnVersion = function (req, res) {
     res.send(JSON.stringify({
       version: version,
@@ -31,8 +31,7 @@ describe('Test Updater', function () {
   }
 
   function uninstallApp (done) {
-    //execSync('gksudo apt-get remove ereuse.org-desktopapp -y')
-    spawnSync('gksudo', ['-k','apt-get remove -y ereuse.org-desktopapp'])
+    spawnSync('sudo', ['apt-get remove -y ereuse.org-desktopapp'])
     exec('apt-cache policy ereuse.org-desktopapp | grep -w "Installed: (none)"', (_, out) => {
       // We double check we have correctly uninstalled the app
       expect(out).contains('none')
@@ -55,24 +54,24 @@ describe('Test Updater', function () {
     })
   })
 
-  beforeEach(uninstallApp)
+  //beforeEach(uninstallApp)
 
   it('updates when there is a newer version', function (done) {
     this.timeout(0)
     // We install a lower version
-    const res = spawn('sudo', ['gdebi -n ./fixtures/eReuse.org-DesktopApp_' + version + '_x64.deb'])
+    const res = spawn('sudo', ['gdebi --n ./fixtures/eReuse.org-DesktopApp_' + version + '_x64.deb'])
     res.on('exit', function ensureAppIsInstalled() {
       // We ensure we have installed the app
       exec('apt-cache policy ereuse.org-desktopapp | grep -w "Installed: (none)"', (_, output) => {
         const ver = output.split(':')[1].trim()
-        expect(ver).contains(version)})
+        expect(ver).equals(version)})
 
 
       // todo We need to change user to root
       spawn('sudo', ['../resources/after-install/add-to-crontab.sh "*/1 * * * *" "localhost:3000"'])
       setTimeout(function afterCron () {
         // We test that the app has been updated successfully
-        exec('apt-cache policy ereuse.org-desktopapp | grep Installed', (_, stdout) => {
+        exec('apt-cache policy ereuse.org-desktopapp | grep Installed:', (_, stdout) => {
           const appVersion = stdout.split(':')[1].trim()
           expect(appVersion).equal(version)
           done()
@@ -80,9 +79,9 @@ describe('Test Updater', function () {
       }, 3 * 1000)  // We suppose that cron will execute before 3 secs
     })
     //let's ensure the app is installed
-
-
   })
+
+
   it('updater without cron, execute updaterBackground', function (done) {
     const update = require('./../resources/updaterBackground.js')
     const baseUrl = 'http://localhost:3000'
@@ -104,7 +103,7 @@ describe('Test Updater', function () {
     }
   })
 
-  afterEach(uninstallApp)
+  //afterEach(uninstallApp)
 
   after(function () {
     // close server

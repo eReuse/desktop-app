@@ -1,14 +1,23 @@
 #!/usr/bin/nodejs // node 4.2.6
 const EXEC_ENCODING = {encoding: 'UTF-8'}
+
+// Change path depends on testing or production
 const PATH_NODE_MODULES = '/usr/local/lib/node_modules/'
+const LOG = '/tmp/desktop-app-error.txt'
+
 const childProcess = require('child_process')
 const fs = require('fs')
-const semver = require(PATH_NODE_MODULES + 'semver') // /usr/local/lib/node_modules/semver/bin/semver
+const appendFileSync = require('fs').appendFileSync
+const semver = require(PATH_NODE_MODULES + 'semver')
 const rp = require(PATH_NODE_MODULES + 'request-promise')
 const Promise = require(PATH_NODE_MODULES + 'promise')
 
+function now() {
+  return (new Date()).toUTCString()
+}
 
 function updateIfNewerVersion (baseUrl, baseRawUrl, branch, arch, version) {
+  appendFileSync(LOG, 'Execution starts in' + now() + '\n')
   baseUrl = baseUrl || 'https://github.com'
   baseRawUrl = baseRawUrl || 'https://raw.githubusercontent.com'
   branch = branch || 'master'
@@ -53,12 +62,14 @@ function updateIfNewerVersion (baseUrl, baseRawUrl, branch, arch, version) {
       }
     }).catch(reject)
   }).catch(function (err) {
-    console.error('There is an error, check the log.')
-    require('fs').writeFileSync('/tmp/desktop-app-error.txt', err)
+    console.error('There is an error, check the log in ' + LOG)
+    appendFileSync(LOG, err)
+  }).finally(function () {
+    appendFileSync(LOG, 'Execution finished at ' + now() + '\n')
   })
 }
 
-// grep -w "Instaŀlat:" change depends on which language
+// grep "Instaŀlat:" change depends on which language
 
 function getLocalVersion () {
   const command = 'apt-cache policy ereuse.org-desktopapp | grep "Insta"'
@@ -67,4 +78,3 @@ function getLocalVersion () {
 }
 
 module.exports = updateIfNewerVersion
-

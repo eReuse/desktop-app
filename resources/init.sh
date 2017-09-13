@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # execute node script
-nodejs ./script-updater-background.js $1
+nodejs /opt/MyeReuse.org_Support/resources/script-updater-background.js $1
