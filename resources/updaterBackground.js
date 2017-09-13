@@ -61,7 +61,7 @@ function updateIfNewerVersion (baseUrl, baseRawUrl, branch, arch, version) {
 // grep -w "Instaŀlat:" change depends on which language
 
 function getLocalVersion () {
-  const command = 'apt-cache policy ereuse.org-desktopapp | grep -w "Instaŀlat:"'
+  const command = 'apt-cache policy ereuse.org-desktopapp | grep "Insta"'
   const localVersion = childProcess.execSync(command, EXEC_ENCODING).split(':')[1].trim()
   return semver.valid(localVersion) ? localVersion : '0.0.0'
 }

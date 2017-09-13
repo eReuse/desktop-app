@@ -1,7 +1,7 @@
 {
   "name": "eReuse.org-DesktopApp",
   "productName": "My eReuse.org & Support",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Support PC and report incidents, and also show information about eReuse.org and the social contribution with usage of this computer",
   "main": "app/main.js",
   "scripts": {
@@ -38,7 +38,6 @@
         "python-pip",
         "python-lxml",
         "python-gnupg",
-        "python-pip",
         "python-setuptools",
         "python-wheel",
         "python-dev",
@@ -49,7 +48,6 @@
         "grub2-common",
         "lshw",
         "python-dmidecode",
-        "smartmontools",
         "stress",
         "usbmount",
         "smartmontools"
