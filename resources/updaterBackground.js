@@ -2,22 +2,21 @@
 const EXEC_ENCODING = {encoding: 'UTF-8'}
 
 // Change path depends on testing or production
-const PATH_NODE_MODULES = '/usr/local/lib/node_modules/'
-const LOG = '/tmp/desktop-app-error.txt'
+//const LOG = '/tmp/desktop-app-error.txt'
 
 const childProcess = require('child_process')
 const fs = require('fs')
 const appendFileSync = require('fs').appendFileSync
-const semver = require(PATH_NODE_MODULES + 'semver')
-const rp = require(PATH_NODE_MODULES + 'request-promise')
-const Promise = require(PATH_NODE_MODULES + 'promise')
+const semver = require('semver')
+const rp = require('request-promise')
+const Promise = require('promise')
 
 function now() {
   return (new Date()).toUTCString()
 }
 
 function updateIfNewerVersion (baseUrl, baseRawUrl, branch, arch, version) {
-  appendFileSync(LOG, 'Execution starts in' + now() + '\n')
+  console.log('Execution starts in ' + now() + '\n')
   baseUrl = baseUrl || 'https://github.com'
   baseRawUrl = baseRawUrl || 'https://raw.githubusercontent.com'
   branch = branch || 'master'
@@ -35,8 +34,7 @@ function updateIfNewerVersion (baseUrl, baseRawUrl, branch, arch, version) {
         name: infoApp.name,
         version: infoApp.version, // todo get this from app
         arch: arch || process.arch, // ia32 or x64
-        platform: process.platform,
-
+        platform: process.platform
       }
       if (semver.gt(app.version, localVersion)) {
         console.log('New version ' + app.version + '.')
@@ -61,11 +59,10 @@ function updateIfNewerVersion (baseUrl, baseRawUrl, branch, arch, version) {
         console.log('There is not an update (your version: ' + localVersion + ', repo version: ' + app.version + ').')
       }
     }).catch(reject)
-  }).catch(function (err) {
-    console.error('There is an error, check the log in ' + LOG)
-    appendFileSync(LOG, err)
+  }).catch(function () {
+    console.error('There is an error, check the log in /var/log')
   }).finally(function () {
-    appendFileSync(LOG, 'Execution finished at ' + now() + '\n')
+    console.log('Execution finished at ' + now() + '\n')
   })
 }
 
