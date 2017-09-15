@@ -7,11 +7,12 @@
   "scripts": {
     "postinstall": "install-app-deps",
     "start": "electron .",
-    "test": "gksudo ./node_modules/mocha/bin/mocha tests/updater.test.js",
-    "clear": "rm -r dist",
-    "dist": "npm run linux32 && npm run linux64",
+    "test": "gksudo -k ./node_modules/mocha/bin/mocha tests/updater.test.js",
+    "clear": "rm -rf dist",
     "linux32": "build --linux --ia32 ",
-    "linux64": "build --linux --x64"
+    "dist32": "npm run clear && npm run linux32",
+    "linux64": "build --linux --x64",
+    "dist64": "npm run clear && build --linux --x64"
   },
   "author": {
     "name": "Jordi Nadeu",
@@ -32,8 +33,6 @@
     "deb": {
       "afterInstall": "./scripts/afterInstall.sh",
       "depends": [
-        "nodejs",
-        "npm",
         "git",
         "python-pip",
         "python-lxml",
@@ -77,11 +76,12 @@
   "dependencies": {
     "chokidar": "^1.7.0",
     "lodash": "latest",
+    "node-linux": "^0.1.11",
+    "node-notifier": "latest",
     "promise": "latest",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
-    "semver": "^5.3.0",
-    "node-notifier": "latest"
+    "semver": "^5.3.0"
   },
   "devDependencies": {
     "chai": "^4.1.1",
