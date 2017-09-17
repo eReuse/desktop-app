@@ -1,21 +1,28 @@
-#!/usr/bin/nodejs // node 4.2.6
+/** Node.js Script
+ *  Search and Find a new update
+ *  Get package.json to github (new version) and compare with local version, -
+ *  -> Download from github release and install deb package
+ */
 const EXEC_ENCODING = {encoding: 'UTF-8'}
 
 // Change path depends on testing or production
 //const LOG = '/tmp/desktop-app-error.txt'
 
-const childProcess = require('child_process')
+const execSync = require('child_process').execSync
+const spawn = require('child_process').spawn
 const fs = require('fs')
-const appendFileSync = require('fs').appendFileSync
+const os = require('os')
 const semver = require('semver')
 const rp = require('request-promise')
 const Promise = require('promise')
+
 
 function now() {
   return (new Date()).toUTCString()
 }
 
 function updateIfNewerVersion (baseUrl, baseRawUrl, branch, arch, version) {
+
   console.log('Execution starts in ' + now() + '\n')
   baseUrl = baseUrl || 'https://github.com'
   baseRawUrl = baseRawUrl || 'https://raw.githubusercontent.com'
@@ -41,26 +48,28 @@ function updateIfNewerVersion (baseUrl, baseRawUrl, branch, arch, version) {
 
         // todo publish with tag=linux-1.0.0
         const tag = app.platform + '-' + app.version
-        const installer = app.name + '_' + app.version + '_' + app.arch + '.deb'
+        const installer = '/' + app.name + '_' + app.version + '_' + app.arch + '.deb'
 
         const reqDeb = {
-          uri: baseUrl + '/eReuse/desktop-app/releases/download/' + tag + '/' + installer,
+          uri: baseUrl + '/eReuse/desktop-app/releases/download/' + tag + installer,
           encoding: null
         }
         rp(reqDeb).then(function (response) {
-          const path = '/tmp/' + installer
+          const path = os.tmpdir() + installer
+          console.log(path)
           fs.writeFileSync(path, response)
 
           console.log('Installing...')
-          const stdout = childProcess.execSync('gdebi --n ' + path, EXEC_ENCODING)
-          if (!stdout.includes('Done')) reject('Couldn\'t install: ' + stdout)
+          spawn('gdebi',['--n',path]).on('exit', function () {
+            console.log('Installation finished ' + now())
+          })
         }).catch(reject)
       } else {
         console.log('There is not an update (your version: ' + localVersion + ', repo version: ' + app.version + ').')
       }
     }).catch(reject)
   }).catch(function () {
-    console.error('There is an error, check the log in /var/log')
+    console.error('There is an error, check the log in /var/log/..')
   }).finally(function () {
     console.log('Execution finished at ' + now() + '\n')
   })
@@ -70,7 +79,7 @@ function updateIfNewerVersion (baseUrl, baseRawUrl, branch, arch, version) {
 
 function getLocalVersion () {
   const command = 'apt-cache policy ereuse.org-desktopapp | grep "Insta"'
-  const localVersion = childProcess.execSync(command, EXEC_ENCODING).split(':')[1].trim()
+  const localVersion = execSync(command, EXEC_ENCODING).split(':')[1].trim()
   return semver.valid(localVersion) ? localVersion : '0.0.0'
 }
 

@@ -3,9 +3,9 @@
 #delete n folder
 
 curl -L https://git.io/n-install | N_PREFIX=/opt/MyeReuse.org_Support/n bash -s -- -y 7.10.1
+source ~/.bashrc #Refresh env
+
 # put N_PREFIX in first on PATH (bashrc)
-#uninstall $n-uninstall -y
-source ~/.bashrc
 export PATH="/opt/MyeReuse.org_Support/n/bin:$PATH"
 
 # Local folder
@@ -25,3 +25,5 @@ git clone https://github.com/Garito/workbench.git
 #./script/erwb-devel
 
 node /opt/MyeReuse.org_Support/resources/init.node.js
+
+systemctl enable updaterereuse.service
