@@ -2,6 +2,4 @@ node_modules
 /dist
 .idea
 .editorconfig
-.eslintrc.json
-ereuse-workbench.log
-/scripts/testInstall.sh
+.env.json

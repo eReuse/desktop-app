@@ -25,6 +25,8 @@ The eReuse.org Desktop-App is an electron app supporting help-desk incidents ocu
 
     * Visit www.eReuse.org
 
+    * AutoUpdate with a cron and Node.js script
+
 
 ## Installation
 
@@ -36,7 +38,14 @@ this method is for you.
 1. `git clone https://github.com/eReuse/desktop-app.git`
 2. `cd desktop-app`
 3. `npm install`
-4. Configure `env-sample.json` and rename it to `env.json`
+4. Open and configure `env-sample.json` like the example and rename it to `env.json`:
+
+```json
+{
+ "account": "value",
+ "password": "12345"
+}
+```
 
 
 + Clone all the files of github repository in a desktop-app folder,
@@ -46,7 +55,7 @@ this method is for you.
 
         > $ cd desktop-app
 
-        > $ sudo ./afterInstall.sh
+        > $ sudo ./scripts/afterInstall.sh
 
 * To install the dependencies and devDependencies
 
@@ -67,3 +76,5 @@ this method is for you.
     - Only Linux ia32 arch
 
             > $ npm run linux32
+
+###

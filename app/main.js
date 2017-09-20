@@ -1,29 +1,14 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
-const updateLinux = require('./update_linux')
-const notifier = require('node-notifier')
 
 let winMain = null // create main window
 let version = app.getVersion()
 
 //const nameLog = process.env.USERNAME
 const name = process.env.USER
-// eslint-disable-next-line no-console
 console.log(name)
-notifier.notify({
-  'title': 'DesktopApp',
-  'message': 'Your user is ' + name
-})
-
-/*
-updater.on('update-downloaded', (event) => {
-  exec('pip install -U git+https://github.com/Garito/workbench.git')
-}) */
-
-// check if new version is available, download and install it
-
-updateLinux.autoUpdateL(version)
+console.log(version)
 
 function createWindow () {
   // Create browser window
@@ -51,7 +36,7 @@ function createWindow () {
   })
 
   // Open devtools
-  winMain.webContents.openDevTools()
+  // winMain.webContents.openDevTools()
 
   winMain.on('closed', () => {
     winMain = null
