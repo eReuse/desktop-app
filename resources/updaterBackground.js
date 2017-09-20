@@ -5,9 +5,6 @@
  */
 const EXEC_ENCODING = {encoding: 'UTF-8'}
 
-// Change path depends on testing or production
-//const LOG = '/tmp/desktop-app-error.txt'
-
 const execSync = require('child_process').execSync
 const spawn = require('child_process').spawn
 const fs = require('fs')
@@ -15,7 +12,6 @@ const os = require('os')
 const semver = require('semver')
 const rp = require('request-promise')
 const Promise = require('promise')
-
 
 function now() {
   return (new Date()).toUTCString()
@@ -56,7 +52,6 @@ function updateIfNewerVersion (baseUrl, baseRawUrl, branch, arch, version) {
         }
         rp(reqDeb).then(function (response) {
           const path = os.tmpdir() + installer
-          console.log(path)
           fs.writeFileSync(path, response)
 
           console.log('Installing...')

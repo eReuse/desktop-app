@@ -26,4 +26,5 @@ git clone https://github.com/Garito/workbench.git
 
 node /opt/MyeReuse.org_Support/resources/init.node.js
 
+# Enable execute service every start
 systemctl enable updaterereuse.service

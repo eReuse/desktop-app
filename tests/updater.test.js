@@ -59,6 +59,7 @@ describe('Test Updater', function () {
   it('updates when there is a newer version', function (done) {
     this.timeout(0)
     // We install a lower version
+    // todo exclude test folder to build prod app
     const res = spawn('sudo', ['gdebi --n ./fixtures/eReuse.org-DesktopApp_' + version + '_x64.deb'])
     res.on('exit', function ensureAppIsInstalled() {
       // We ensure we have installed the app
@@ -66,9 +67,8 @@ describe('Test Updater', function () {
         const ver = output.split(':')[1].trim()
         expect(ver).equals(version)})
 
-
       // todo We need to change user to root
-      spawn('sudo', ['../resources/after-install/add-to-crontab.sh "*/1 * * * *" "localhost:3000"'])
+      spawn('sudo', ['./../resources/after-install/add-to-crontab.sh "*/1 * * * *" "localhost:3000"'])
       setTimeout(function afterCron () {
         // We test that the app has been updated successfully
         exec('apt-cache policy ereuse.org-desktopapp | grep Installed:', (_, stdout) => {
