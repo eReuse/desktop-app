@@ -24,6 +24,7 @@ function generateAndSubmitSnapshot () {
     }
     DeviceHub.post('events/devices/snapshot', snapshot).then(response => {
       // tot ok el snapshot s'ha creat
+      console.log('Snapshot send successfully')
       notifier.notify({
         'title': 'Diagnostic',
         'message': 'Snapshot send successfully'

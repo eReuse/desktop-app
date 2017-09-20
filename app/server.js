@@ -9,7 +9,7 @@ const Promise = require('promise')
  * @private
  */
 function deviceHub () {
-  const BASE_URL = 'http://devicehub.ereuse.net/'
+  const BASE_URL = varEnv.BASE_URL
   const method = {
     headers: {
       'Content-Type': 'application/json',
@@ -42,8 +42,8 @@ function deviceHub () {
     static _login_if_needed () {
       if (_.isNull(login_promise)) {
         const body = {
-          email: varEnv.mail_dh,
-          password: varEnv.pwd_dh
+          email: varEnv.MAIL_DH,
+          password: varEnv.PWD_DH
         }
         login_promise = this._post('/login', body).then(account => {
           db = account.defaultDatabase

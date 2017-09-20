@@ -1,7 +1,6 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
-const notifier = require('node-notifier')
 
 let winMain = null // create main window
 let version = app.getVersion()
@@ -10,10 +9,6 @@ let version = app.getVersion()
 const name = process.env.USER
 console.log(name)
 console.log(version)
-notifier.notify({
-  'title': 'DesktopApp',
-  'message': 'Your user is ' + name
-})
 
 function createWindow () {
   // Create browser window
