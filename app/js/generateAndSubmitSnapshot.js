@@ -18,6 +18,7 @@ function generateAndSubmitSnapshot () {
       const text = fs.readFileSync(path, 'UTF-8')
       snapshot = JSON.parse(text)
       snapshot.snapshotSoftware = 'DesktopApp'
+      snapshot.versionDesktopApp = '0.1.0' //todo getLocalVersion ? function
     } catch (err) {
       console.error(err)
       return
@@ -31,9 +32,11 @@ function generateAndSubmitSnapshot () {
       })
     }).catch((err) => {
       console.error(err)
-      // no login
-      // problems with snapshot
-      // uuid check errors
+      notifier.notify({
+        'title': 'Diagnostic',
+        'message': 'Snapshot is not send correctly'
+      })
+      // todo error controls (no logi, problems with snapshot, uuid check, etc..)
     })
   })
 }
