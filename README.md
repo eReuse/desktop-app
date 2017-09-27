@@ -71,10 +71,10 @@ this method is for you.
 
     - Only Linux x64 arch
 
-            > $ npm run linux64
+            > $ npm run dist64
 
     - Only Linux ia32 arch
 
-            > $ npm run linux32
+            > $ npm run dist32
 
 ###
