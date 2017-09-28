@@ -1,0 +1,8 @@
+{
+  "DeviceHub": "URL to take all info",
+  "Version": "ver",
+  "App": "url to deb",
+  "Specific": {
+    "welcome": { "url":"url" , "offline":"html"}
+  }
+}
