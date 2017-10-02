@@ -21,11 +21,11 @@ The eReuse.org Desktop-App is an electron app supporting help-desk incidents ocu
 
     * Debian packages (deb) [for now]
 
-    * Take a Snapshot (Workbench) and sent to DeviceHub
+    * Take a Snapshot (Workbench) and send to DeviceHub
 
     * Visit www.eReuse.org
 
-    * AutoUpdate with a cron and Node.js script
+    * AutoUpdate using systemd and Node.js script
 
 
 ## Installation
@@ -65,7 +65,7 @@ this method is for you.
 
         > $ npm start
 
-* To build and generate executables (deb) for x64 and ia32
+* To build and generate executables (deb) for x64 and x32
 
         > $ npm run dist
 
@@ -73,7 +73,7 @@ this method is for you.
 
             > $ npm run dist64
 
-    - Only Linux ia32 arch
+    - Only Linux x32 arch
 
             > $ npm run dist32
 
