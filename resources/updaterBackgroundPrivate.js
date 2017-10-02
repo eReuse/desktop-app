@@ -46,7 +46,7 @@ return new Promise(function (fulfill, reject) {
 
       // todo publish with tag=linux-0.1.0
       //const tag = app.platform + '-' + app.version
-      const installer = '/' + app.name + '_' + app.version + '_' + app.arch + '.deb'
+      const installer = '/' + app.name + '-' + app.version + '-' + app.arch + '.deb'
 
       const reqDeb = {
         uri: config.App + installer,
