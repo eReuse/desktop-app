@@ -4,7 +4,7 @@ const path = require('path')
 const fs = require('fs')
 const os = require('os')
 const notifier = require('node-notifier')
-const DeviceHub = require('../../resources/server')
+const DeviceHub = require('../../resources/devicehub')
 
 // Documentation login and send json http://devicehub.ereuse.org/
 

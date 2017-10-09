@@ -1,7 +1,7 @@
 /** Node.js Script
  *  Search and Find a new update
- *  Get package.json to github (new version) and compare with local version, -
- *  -> Download from github release and install deb package
+ *  Get env.json to devicehub (config and new version info) and compare with local version, -
+ *  -> Download from DeviceHub release and install deb package
  */
 
 const EXEC_ENCODING = {encoding: 'UTF-8'}
@@ -31,20 +31,24 @@ function updateIfNewerVersion() {
       arch: process.arch || os.arch(), // todo only accept ia32 or x64??
       platform: process.platform
     }
+
     const typeFile = process.platform + '-' + process.arch
     console.log(process.arch) // 'arm', 'ia32', or 'x64'
     console.log(process.platform) // 'darwin', 'freebsd', 'linux', 'sunos' or 'win32'
     console.log(os.arch())
+
     if (semver.gt(app.version, localVersion)) {
       console.log('New version ' + configEnv.version + '.')
-      const installer = '/' + app.name + '_' + app.version + '_' + app.arch + '.deb'
-      const pathDeb = configEnv.url + configEnv.files[0].file + installer
+      const installer = app.name + '_' + app.version + '_' + app.arch + '.deb'
+      const files = configEnv.files
+      let result = _.find(files, ['name', installer])
+      const pathDeb = configEnv.url + result.file + result.name
       const headers = {
         'Accept': 'application/octet-stream',
-        'content-type': 'application/octet-stream',
+        'content-type': result.content_type
       }
       DeviceHub.get(pathDeb, headers).then(function (response) {
-        const path = os.tmpdir() + installer
+        const path = os.tmpdir() + '/' + installer
         fs.writeFileSync(path, response)
 
         console.log('Installing...')
@@ -59,7 +63,6 @@ function updateIfNewerVersion() {
   {
     console.error(err)
     console.error('There is an error, check the log in /var/log/..')
-
   }
   console.log('Execution finished at ' + now() + '\n')
 }
