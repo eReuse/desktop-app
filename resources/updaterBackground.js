@@ -36,7 +36,7 @@ function updateIfNewerVersion (baseUrl, baseRawUrl, branch, arch, version) {
       const app = {
         name: infoApp.name,
         version: infoApp.version, // todo get this from app
-        arch: arch || process.arch, // ia32 or x64
+        arch: os.arch() || process.arch, // ia32 or x64
         platform: process.platform
       }
       if (semver.gt(app.version, localVersion)) {

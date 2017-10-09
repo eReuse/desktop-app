@@ -4,7 +4,7 @@ const path = require('path')
 const fs = require('fs')
 const os = require('os')
 const notifier = require('node-notifier')
-const DeviceHub = require('../server')
+const DeviceHub = require('../../resources/server')
 
 // Documentation login and send json http://devicehub.ereuse.org/
 
@@ -18,6 +18,7 @@ function generateAndSubmitSnapshot () {
       const text = fs.readFileSync(path, 'UTF-8')
       snapshot = JSON.parse(text)
       snapshot.snapshotSoftware = 'DesktopApp'
+      snapshot.versionDesktopApp = '0.1.0'
     } catch (err) {
       console.error(err)
       return

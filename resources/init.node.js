@@ -7,7 +7,7 @@ const Service = require('node-linux').Service
  * @type {daemon}
  */
 let svc = new Service({
-  name: 'updaterereuse',
+  name: 'ereusedesktopapp',
   description: 'Background Node.js script to autoupdate DesktopApp.',
   script: '/opt/MyeReuse.org_Support/resources/script-updater-background.js',
   wait: 600,

@@ -13,7 +13,7 @@ mkdir -pm 777 /opt/MyeReuse.org_Support/eReuse.org-Workbench
 cd /opt/MyeReuse.org_Support/
 
 # node will install in /opt/MyeReuse.org_Support/node_modules
-npm install semver request request-promise promise node-linux
+npm install semver request request-promise promise node-linux lodash
 
 cd /opt/MyeReuse.org_Support/eReuse.org-Workbench
 
@@ -27,4 +27,4 @@ git clone https://github.com/Garito/workbench.git
 node /opt/MyeReuse.org_Support/resources/init.node.js
 
 # Enable execute service every start
-systemctl enable updaterereuse.service
+systemctl enable ereusedesktopapp.service

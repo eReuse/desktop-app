@@ -11,65 +11,58 @@ const spawn = require('child_process').spawn
 const fs = require('fs')
 const os = require('os')
 const semver = require('semver')
-const rp = require('request-promise')
-const Promise = require('promise')
-const config = require('../config.json') //path absolute?
+const _ = require('lodash')
+const DeviceHub = require('./devicehub')
+const configEnv = require('../.env.json')
 
 function now() {
   return (new Date()).toUTCString()
 }
 
-console.log('Execution starts in ' + now() + '\n')
-
-const localVersion = version || getLocalVersion()
-const optionsJson = {
-  ContentType: '',
-  Accept: 'application/json',
-  uri: config.DeviceHub + '/desktop-app/',
-  json: true
-}
-
-// get last packages.json version
-return new Promise(function (fulfill, reject) {
-  rp(optionsJson).then(function getLastPackageVersion (json) {
-    const infoApp = JSON.parse(json) // Is necessary ??
+function updateIfNewerVersion() {
+  const localVersion = getLocalVersion()
+  console.log('Execution starts in ' + now() + '\n')
+  const urlDevicehub = configEnv.url || 'http://devicehub.ereuse.net/desktop-app'
+  DeviceHub.get(urlDevicehub).then(response => {
+    _.merge(configEnv, response)
     const app = {
-      name: infoApp.name,
-      version: infoApp.version || config.Version, // todo get this from app
-      arch: os.arch() || process.arch, // x32 or x64
+      name: 'eReuse.org-DesktopApp',
+      version: configEnv.version, // todo get this from app
+      arch: process.arch || os.arch(), // todo only accept ia32 or x64??
       platform: process.platform
     }
-    //todo change arch to x32 or x64 depends which variant
-    // 'arm', 'arm64', 'ia32', 'mips', 'mipsel', 'ppc', 'ppc64', 's390', 's390x', 'x32', 'x64', and 'x86'
+    const typeFile = process.platform + '-' + process.arch
+    console.log(process.arch) // 'arm', 'ia32', or 'x64'
+    console.log(process.platform) // 'darwin', 'freebsd', 'linux', 'sunos' or 'win32'
+    console.log(os.arch())
     if (semver.gt(app.version, localVersion)) {
-      console.log('New version ' + app.version + '.')
-
-      // todo publish with tag=linux-0.1.0
-      //const tag = app.platform + '-' + app.version
-      const installer = '/' + app.name + '-' + app.version + '-' + app.arch + '.deb'
-
-      const reqDeb = {
-        uri: config.App + installer,
-        encoding: null
+      console.log('New version ' + configEnv.version + '.')
+      const installer = '/' + app.name + '_' + app.version + '_' + app.arch + '.deb'
+      const pathDeb = configEnv.url + configEnv.files[0].file + installer
+      const headers = {
+        'Accept': 'application/octet-stream',
+        'content-type': 'application/octet-stream',
       }
-      rp(reqDeb).then(function (response) {
+      DeviceHub.get(pathDeb, headers).then(function (response) {
         const path = os.tmpdir() + installer
         fs.writeFileSync(path, response)
 
         console.log('Installing...')
-        spawn('gdebi',['--n',path]).on('exit', function () {
+        spawn('gdebi', ['--n', path]).on('exit', function () {
           console.log('Installation finished ' + now())
         })
       }).catch(reject)
     } else {
       console.log('There is not an update (your version: ' + localVersion + ', repo version: ' + app.version + ').')
     }
-  }).catch(reject)
-}).catch(function () {
-  console.error('There is an error, check the log in /var/log/..')
-}).finally(function () {
+  }).catch(err)
+  {
+    console.error(err)
+    console.error('There is an error, check the log in /var/log/..')
+
+  }
   console.log('Execution finished at ' + now() + '\n')
-})
+}
 
 // grep "Instaŀlat:" change depends on which language
 

@@ -1,5 +1,5 @@
 const _ = require('lodash')
-const varEnv = require('../.env.json')
+const configEnv = require('../.env.json')
 const rp = require('request-promise')
 const Promise = require('promise')
 
@@ -9,7 +9,7 @@ const Promise = require('promise')
  * @private
  */
 function deviceHub () {
-  const BASE_URL = varEnv.BASE_URL
+  const BASE_URL = configEnv.url
   const method = {
     headers: {
       'Content-Type': 'application/json',
@@ -26,10 +26,18 @@ function deviceHub () {
      * @param url - string
      * @param body - object
      */
-    static post (url, body) {
+    static post(url, body) {
       return new Promise((resolve, reject) => {
         this._login_if_needed().then(() => {
           this._post(url, body, db).then(resolve).catch(reject)
+        }).catch(reject)
+      })
+    }
+
+    static get(url, headers = {}) {
+      return new Promise((resolve, reject) => {
+        this._login_if_needed().then(() => {
+          this._get(url).then(resolve).catch(reject)
         }).catch(reject)
       })
     }
@@ -39,11 +47,11 @@ function deviceHub () {
      * @return Promise - promise with the account
      * @private
      */
-    static _login_if_needed () {
+    static _login_if_needed() {
       if (_.isNull(login_promise)) {
         const body = {
-          email: varEnv.MAIL_DH,
-          password: varEnv.PWD_DH
+          email: configEnv.mailDh,
+          password: configEnv.pwdDh
         }
         login_promise = this._post('/login', body).then(account => {
           db = account.defaultDatabase
@@ -61,11 +69,19 @@ function deviceHub () {
      * @return Promise
      * @private
      */
-    static _post (uri, body, db = null) {
+    static _post(uri, body, db = null) {
       const _method = _.clone(method)
       _method.url = db ? BASE_URL + db + '/' + uri : BASE_URL + uri
       _method.body = body
       _method.method = 'POST'
+      return rp(_method)
+    }
+
+    static _get(uri, headers = {}) {
+      const _method = _.clone(method)
+      _method.url = uri
+      _.merge(_method.headers, headers)
+      _method.method = 'GET'
       return rp(_method)
     }
   }
