@@ -22,33 +22,31 @@ function now() {
 function updateIfNewerVersion() {
   const localVersion = getLocalVersion()
   console.log('Execution starts in ' + now() + '\n')
-  const urlDevicehub = configEnv.url || 'http://devicehub.ereuse.net/desktop-app'
+  const urlDevicehub = configEnv.url + '/desktop-app' || 'http://devicehub.ereuse.net/desktop-app'
   DeviceHub.get(urlDevicehub).then(response => {
     _.merge(configEnv, response)
-    const app = {
+    const appInfo = {
       name: 'eReuse.org-DesktopApp',
-      version: configEnv.version, // todo get this from app
-      arch: process.arch || os.arch(), // todo only accept ia32 or x64??
+      version: configEnv.version,
+      arch: process.arch, // todo only accept ia32 or x64??
       platform: process.platform
     }
-
-    const typeFile = process.platform + '-' + process.arch
-    console.log(process.arch) // 'arm', 'ia32', or 'x64'
-    console.log(process.platform) // 'darwin', 'freebsd', 'linux', 'sunos' or 'win32'
     console.log(os.arch())
-
-    if (semver.gt(app.version, localVersion)) {
-      console.log('New version ' + configEnv.version + '.')
-      const installer = app.name + '_' + app.version + '_' + app.arch + '.deb'
+    console.dir(appInfo)
+    if (semver.gt(appInfo.version, localVersion)) {
+      console.log('New version ' + version + '.')
+      let typeFile = ''
+      if (appInfo.platform === 'linux') {
+        typeFile = 'deb'
+      }
       const files = configEnv.files
-      let result = _.find(files, ['name', installer])
-      const pathDeb = configEnv.url + result.file + result.name
+      const file = _.find(files, {type: typeFile, architecture: appInfo.arch})
+      const pathDeb = configEnv.url + file.url
       const headers = {
-        'Accept': 'application/octet-stream',
-        'content-type': result.content_type
+        'Accept': '*/*',
       }
       DeviceHub.get(pathDeb, headers).then(function (response) {
-        const path = os.tmpdir() + '/' + installer
+        const path = os.tmpdir() + '/' + 'Desktop-app.' + typeFile
         fs.writeFileSync(path, response)
 
         console.log('Installing...')
@@ -57,12 +55,12 @@ function updateIfNewerVersion() {
         })
       }).catch(reject)
     } else {
-      console.log('There is not an update (your version: ' + localVersion + ', repo version: ' + app.version + ').')
+      console.log('There is not an update (your version: ' + localVersion + ', repo version: ' + appInfo.version + ').')
     }
   }).catch(err)
   {
     console.error(err)
-    console.error('There is an error, check the log in /var/log/..')
+    console.error('There is an error, couldn\'t ...')
   }
   console.log('Execution finished at ' + now() + '\n')
 }

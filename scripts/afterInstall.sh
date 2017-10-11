@@ -21,7 +21,8 @@ pip install setuptools enum34 python-dateutil pySMART pyudev tqdm requests lxml 
 
 # Clone workbench files
 git clone https://github.com/Garito/workbench.git
-#cd workbench
+cd workbench
+sudo pip install -e .
 #./script/erwb-devel
 
 node /opt/MyeReuse.org_Support/resources/init.node.js

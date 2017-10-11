@@ -1,4 +1,4 @@
-const execSync = require('child_process').execSync
+const spawnSync = require('child_process').spawnSync
 const chokidar = require('chokidar')
 const path = require('path')
 const fs = require('fs')
@@ -9,7 +9,8 @@ const DeviceHub = require('../../resources/devicehub')
 // Documentation login and send json http://devicehub.ereuse.org/
 
 function generateAndSubmitSnapshot () {
-  execSync('gksudo -k /opt/MyeReuse.org_Support/eReuse.org-Workbench/workbench/scripts/erwb-devel')
+  spawnSync('gksudo', ['-k', '/opt/MyeReuse.org_Support/eReuse.org-Workbench/workbench/scripts/erwb-devel'])
+  // spawnSync('sudo erwb')
   console.log('Child exited wb finished')
   const filePath = path.join(os.tmpdir(), '*.json')
   chokidar.watch(filePath).on('add', path => {
