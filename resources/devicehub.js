@@ -1,5 +1,5 @@
 const _ = require('lodash')
-const configEnv = require('../.env.json')
+const configEnv = require('./.env.json')
 const rp = require('request-promise')
 const Promise = require('promise')
 

@@ -13,7 +13,7 @@ const os = require('os')
 const semver = require('semver')
 const _ = require('lodash')
 const DeviceHub = require('./devicehub')
-const configEnv = require('../.env.json')
+const configEnv = require('./.env.json')
 
 function now() {
   return (new Date()).toUTCString()
@@ -25,6 +25,7 @@ function updateIfNewerVersion() {
   const urlDevicehub = configEnv.url + '/desktop-app' || 'http://devicehub.ereuse.net/desktop-app'
   DeviceHub.get(urlDevicehub).then(response => {
     _.merge(configEnv, response)
+    // fs.writeFileSync(path, response)
     const appInfo = {
       name: 'eReuse.org-DesktopApp',
       version: configEnv.version,
