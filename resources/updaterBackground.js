@@ -22,56 +22,55 @@ function now() {
 function updateIfNewerVersion() {
   const localVersion = getLocalVersion()
   console.log('Execution starts in ' + now() + '\n')
-  const urlDevicehub = configEnv.url + '/desktop-app' || 'http://devicehub.ereuse.net/desktop-app'
-  DeviceHub.get(urlDevicehub).then(response => {
+  const urlDevicehub = configEnv.url || 'http://devicehub.ereuse.net'
+  DeviceHub.get(urlDevicehub + '/desktop-app').then(response => {
+    //after .get jump to catch and finish script, then return to this comment??
     _.merge(configEnv, response)
-    // fs.writeFileSync(path, response)
+    // fs.writeFileSync(path, response) //keep info in env?
     const appInfo = {
       name: 'eReuse.org-DesktopApp',
       version: configEnv.version,
       arch: process.arch, // todo only accept ia32 or x64??
       platform: process.platform
     }
-    console.log(os.arch())
-    console.dir(appInfo)
+    const files = configEnv.files
+    let file = null
+    let typeFile = null
+    if (appInfo.platform === 'linux') {
+      typeFile = 'deb'
+      file = _.find(files, {type: typeFile, architecture: appInfo.arch})
+    }
+    const installer = '/' + appInfo.name + '_' + appInfo.version + '_' + appInfo.arch + '.' + typeFile
+    //else if (win) type = 'exe'
+    const pathDeb = urlDevicehub + file.url
+    const headers = {
+      'Accept': '*/*',
+    }
     if (semver.gt(appInfo.version, localVersion)) {
       console.log('New version ' + version + '.')
-      let typeFile = ''
-      if (appInfo.platform === 'linux') {
-        typeFile = 'deb'
-      }
-      const files = configEnv.files
-      const file = _.find(files, {type: typeFile, architecture: appInfo.arch})
-      const pathDeb = configEnv.url + file.url
-      const headers = {
-        'Accept': '*/*',
-      }
       DeviceHub.get(pathDeb, headers).then(function (response) {
-        const path = os.tmpdir() + '/' + 'Desktop-app.' + typeFile
+        const path = os.tmpdir() + installer
         fs.writeFileSync(path, response)
-
         console.log('Installing...')
         spawn('gdebi', ['--n', path]).on('exit', function () {
           console.log('Installation finished ' + now())
         })
-      }).catch(reject)
+      }).catch()
     } else {
       console.log('There is not an update (your version: ' + localVersion + ', repo version: ' + appInfo.version + ').')
     }
-  }).catch(err)
+  }).catch()
   {
-    console.error(err)
-    console.error('There is an error, couldn\'t ...')
+    console.log('There is an error, couldn\'t get desktop-app info')
   }
   console.log('Execution finished at ' + now() + '\n')
 }
 
-// grep "Instaŀlat:" change depends on which language
-
+// grep "Instaŀlat:" change depends on which language | now is catalan version
 function getLocalVersion () {
   const command = 'apt-cache policy ereuse.org-desktopapp | grep "Insta"'
   const localVersion = execSync(command, EXEC_ENCODING).split(':')[1].trim()
   return semver.valid(localVersion) ? localVersion : '0.0.0'
 }
 
-module.exports = updateIfNewerVersion
+module.exports = updateIfNewerVersion ()
