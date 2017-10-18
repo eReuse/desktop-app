@@ -56,11 +56,15 @@ function updateIfNewerVersion() {
         spawn('gdebi', ['--n', path]).on('exit', function () {
           console.log('Installation finished ' + now())
         })
-      }).catch()
+      }).catch((err) => {
+        console.error(err)
+      })
     } else {
       console.log('There is not an update (your version: ' + localVersion + ', repo version: ' + appInfo.version + ').')
     }
-  }).catch()
+  }).catch((err) => {
+    console.error(err)
+  })
   {
     console.log('There is an error, couldn\'t get desktop-app info')
   }
