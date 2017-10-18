@@ -33,9 +33,11 @@ function generateAndSubmitSnapshot () {
       })
     }).catch((err) => {
       console.error(err)
-      // no login
-      // problems with snapshot
-      // uuid check errors
+      notifier.notify({
+        'title': 'Diagnostic',
+        'message': 'Snapshot is not send correctly'
+      })
+      // todo error controls (no logi, problems with snapshot, uuid check, etc..)
     })
   })
 }
