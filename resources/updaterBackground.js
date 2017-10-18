@@ -26,7 +26,8 @@ function updateIfNewerVersion() {
   DeviceHub.get(urlDevicehub + '/desktop-app').then(response => {
     //after .get jump to catch and finish script, then return to this comment??
     _.merge(configEnv, response)
-    // fs.writeFileSync(path, response) //keep info in env?
+    let path = '/opt/MyeReuse.org_Support/resources/.env.json' // todo take path auto
+    fs.writeFileSync(path, response) //keep info in env?
     const appInfo = {
       name: 'eReuse.org-DesktopApp',
       version: configEnv.version,

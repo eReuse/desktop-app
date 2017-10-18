@@ -29,14 +29,14 @@ function createWindow () {
     slashes: true
   }))
 
-  // wait all DOM are ready to show
+  // wait all DOM are ready to show but not access
   winMain.webContents.on('did-finish-load', () => {
     winMain.show()
     winMain.focus()
   })
 
   // Open devtools
-  // winMain.webContents.openDevTools()
+  winMain.webContents.openDevTools()
 
   winMain.on('closed', () => {
     winMain = null
