@@ -29,7 +29,7 @@ function generateAndSubmitSnapshot () {
       console.log('Snapshot send successfully')
       notifier.notify({
         'title': 'Diagnostic',
-        'message': 'Snapshot send successfully'
+        'message': 'Snapshot send successfully ' + response
       })
     }).catch((err) => {
       console.error(err)
@@ -37,7 +37,7 @@ function generateAndSubmitSnapshot () {
         'title': 'Diagnostic',
         'message': 'Snapshot is not send correctly'
       })
-      // todo error controls (no logi, problems with snapshot, uuid check, etc..)
+      // todo error controls (no login, problems with snapshot, uuid check, etc..)
     })
   })
 }

@@ -9,10 +9,10 @@
     "start": "electron .",
     "test": "gksudo -k ./node_modules/mocha/bin/mocha tests/updater.test.js",
     "clear": "rm -rf dist",
-    "linux32": "build --linux --ia32 ",
+    "linux32": "build -l --ia32 ",
     "dist32": "npm run clear && npm run linux32",
-    "linux64": "build --linux --x64",
-    "dist64": "npm run clear && build --linux --x64",
+    "linux64": "build -l --x64",
+    "dist64": "npm run clear && build -l --x64",
     "all": "npm run clear && npm run linux32 && npm run linux64"
   },
   "author": {
