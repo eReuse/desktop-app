@@ -22,12 +22,15 @@ function now() {
 function updateIfNewerVersion() {
   const localVersion = getLocalVersion()
   console.log('Execution starts in ' + now() + '\n')
-  const urlDevicehub = configEnv.url || 'http://devicehub.ereuse.net'
-  DeviceHub.get(urlDevicehub + '/desktop-app').then(response => {
+  const urlDeviceHub = configEnv.url || 'http://devicehub.ereuse.net'
+  DeviceHub.get(urlDeviceHub + '/desktop-app').then(response => {
     //after .get jump to catch and finish script, then return to this comment??
     _.merge(configEnv, response)
     let path = '/opt/MyeReuse.org_Support/resources/.env.json' // todo take path auto
-    fs.writeFileSync(path, response) //keep info in env?
+    fs.writeFileSync(path, JSON.stringify(configEnv), 'utf-8', function(err) {
+      if (err) throw err
+      console.log('env.json saved!')
+    })
     const appInfo = {
       name: 'eReuse.org-DesktopApp',
       version: configEnv.version,
@@ -43,31 +46,31 @@ function updateIfNewerVersion() {
     }
     const installer = '/' + appInfo.name + '_' + appInfo.version + '_' + appInfo.arch + '.' + typeFile
     //else if (win) type = 'exe'
-    const pathDeb = urlDevicehub + file.url
+    const pathDeb = urlDeviceHub + file.url
     const headers = {
       'Accept': '*/*',
     }
     if (semver.gt(appInfo.version, localVersion)) {
-      console.log('New version ' + version + '.')
-      DeviceHub.get(pathDeb, headers).then(function (response) {
+      console.log('New version ' + appInfo.version + '.')
+      DeviceHub.getDeb(pathDeb, headers).then(function (response) {
         const path = os.tmpdir() + installer
-        fs.writeFileSync(path, response)
+        fs.writeFileSync(path, response, {encoding: 'binary',})
         console.log('Installing...')
         spawn('gdebi', ['--n', path]).on('exit', function () {
           console.log('Installation finished ' + now())
         })
       }).catch((err) => {
         console.error(err)
+        console.log('error getDeb:' + err)
       })
     } else {
       console.log('There is not an update (your version: ' + localVersion + ', repo version: ' + appInfo.version + ').')
     }
   }).catch((err) => {
+    console.log('There is an error, couldn\'t get desktop-app info')
     console.error(err)
   })
-  {
-    console.log('There is an error, couldn\'t get desktop-app info')
-  }
+  // Execution starts and finished in the same time??
   console.log('Execution finished at ' + now() + '\n')
 }
 
@@ -78,4 +81,4 @@ function getLocalVersion () {
   return semver.valid(localVersion) ? localVersion : '0.0.0'
 }
 
-module.exports = updateIfNewerVersion ()
+module.exports = updateIfNewerVersion

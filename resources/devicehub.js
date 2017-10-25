@@ -34,7 +34,7 @@ function deviceHub () {
       })
     }
 
-    static get(url, headers = {}) {
+    static get(url) {
       return new Promise((resolve, reject) => {
         this._login_if_needed().then(() => {
           this._get(url).then(resolve).catch(reject)
@@ -42,6 +42,14 @@ function deviceHub () {
       })
     }
 
+    static getDeb(uri, headers = {}) {
+      const _method = {
+        'url': uri,
+        'headers': headers,
+        'method': 'GET'
+      }
+      return rp(_method)
+    }
     /**
      *
      * @return Promise - promise with the account

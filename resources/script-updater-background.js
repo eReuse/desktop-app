@@ -2,4 +2,4 @@
 /**
  * @param baseUrl, baseRawUrl, branch, arch, version
  */
-require('./updaterBackground')
+require('./updaterBackground')()
