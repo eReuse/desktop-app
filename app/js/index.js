@@ -5,17 +5,23 @@ window._ = require('lodash')
 
 // Executes the workbench
 document.getElementById('botoDiag').addEventListener('click', generateAndSubmitSnapshot)
-//const $ = window.$
-window.$('#main').html(page.html)
-/*
-if (page.url && IHaveInternet) {
-  window.$('#main').html(`<iframe src="${env.pages.support.url}"></iframe>`)
-} else {
+
+// window.$('#main').html('<iframe id="iframe" src="https://www.abacus.coop"></iframe>')
+window.$('#main').html(`<iframe id="iframe" src="${page.url}"></iframe>`)
+
+window.$('#iframe').get(0).onload = () => {
+  try {
+    window.$('#iframe').get(0).contentDocument.head.children[0].text
+    console.log('loaded')
+  } catch(err){
+    changeUrl()
+    console.log('no')
+  }
+}
+
+function changeUrl () {
+  window.$('#iframe').hide()
   window.$('#main').html(page.html)
-}*/
-
-
+}
 // Access to DOM, change or put
-let titleHTML = document.title
-console.log(titleHTML)
 //document.title = titleHTML
