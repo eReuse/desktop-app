@@ -19,7 +19,7 @@ function generateAndSubmitSnapshot () {
       const text = fs.readFileSync(path, 'UTF-8')
       snapshot = JSON.parse(text)
       snapshot.snapshotSoftware = 'DesktopApp'
-      snapshot.versionDesktopApp = '0.1.0'
+      snapshot.versionDesktopApp = '0.1.0' //todo take automatically local version
     } catch (err) {
       console.error(err)
       return

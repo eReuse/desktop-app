@@ -6,7 +6,6 @@ window._ = require('lodash')
 // Executes the workbench
 document.getElementById('botoDiag').addEventListener('click', generateAndSubmitSnapshot)
 
-// window.$('#main').html('<iframe id="iframe" src="https://www.abacus.coop"></iframe>')
 window.$('#main').html(`<iframe id="iframe" src="${page.url}"></iframe>`)
 
 window.$('#iframe').get(0).onload = () => {
