@@ -9,7 +9,7 @@ const Promise = require('promise')
  * @private
  */
 function deviceHub () {
-  const BASE_URL = configEnv.url
+  const BASE_URL = configEnv.url || 'http://devicehub.ereuse.net'
   const method = {
     headers: {
       'Content-Type': 'application/json',
@@ -34,22 +34,13 @@ function deviceHub () {
       })
     }
 
-    static get(url) {
+    static get(url, isFile = false) {
       return new Promise((resolve, reject) => {
-        this._login_if_needed().then(() => {
-          this._get(url).then(resolve).catch(reject)
-        }).catch(reject)
+        this._get(url, {}, isFile).then(resolve).catch(reject)
       })
     }
 
-    static getDeb(uri, headers = {}) {
-      const _method = {
-        'url': uri,
-        'headers': headers,
-        'method': 'GET'
-      }
-      return rp(_method)
-    }
+
     /**
      *
      * @return Promise - promise with the account
@@ -85,9 +76,14 @@ function deviceHub () {
       return rp(_method)
     }
 
-    static _get(uri, headers = {}) {
+    static _get(uri, headers = {}, isFile = false) {
       const _method = _.clone(method)
       _method.url = uri
+      if (isFile) {
+        _method.encoding = null
+        _method.json = false
+        headers.Accept = '*/*'
+      }
       _.merge(_method.headers, headers)
       _method.method = 'GET'
       return rp(_method)

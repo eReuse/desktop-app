@@ -24,12 +24,10 @@ function updateIfNewerVersion() {
   console.log('Execution starts in ' + now() + '\n')
   const urlDeviceHub = configEnv.url || 'http://devicehub.ereuse.net'
   DeviceHub.get(urlDeviceHub + '/desktop-app').then(response => {
-    //after .get jump to catch and finish script, then return to this comment??
     _.merge(configEnv, response)
     let path = '/opt/MyeReuse.org_Support/resources/.env.json' // todo take path auto
     fs.writeFileSync(path, JSON.stringify(configEnv), 'utf-8', function(err) {
       if (err) throw err
-      console.log('env.json saved!')
     })
     const appInfo = {
       name: 'eReuse.org-DesktopApp',
@@ -47,26 +45,23 @@ function updateIfNewerVersion() {
     const installer = '/' + appInfo.name + '_' + appInfo.version + '_' + appInfo.arch + '.' + typeFile
     //else if (win) type = 'exe'
     const pathDeb = urlDeviceHub + file.url
-    const headers = {
-      'Accept': '*/*',
-    }
     if (semver.gt(appInfo.version, localVersion)) {
       console.log('New version ' + appInfo.version + '.')
-      DeviceHub.getDeb(pathDeb, headers).then(function (response) {
+      DeviceHub.get(pathDeb, true).then(function install(response) {
         const path = os.tmpdir() + installer
-        fs.writeFileSync(path, response, {encoding: 'binary',})
+        fs.writeFileSync(path, response, {encoding: 'binary'})
         console.log('Installing...')
         spawn('gdebi', ['--n', path]).on('exit', function () {
           console.log('Installation finished ' + now())
         })
-      }).catch((err) => {
+      }).catch(err => {
         console.error(err)
         console.log('error getDeb:' + err)
       })
     } else {
       console.log('There is not an update (your version: ' + localVersion + ', repo version: ' + appInfo.version + ').')
     }
-  }).catch((err) => {
+  }).catch(err => {
     console.log('There is an error, couldn\'t get desktop-app info')
     console.error(err)
   })

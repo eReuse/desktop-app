@@ -10,8 +10,7 @@ let svc = new Service({
   name: 'ereusedesktopapp',
   description: 'Background Node.js script to autoupdate DesktopApp.',
   script: '/opt/MyeReuse.org_Support/resources/script-updater-background.js',
-  wait: 6000,
-  grow: 1,
+  wait: 900
 })
 
 svc.install()
