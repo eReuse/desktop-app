@@ -63,10 +63,6 @@
       }
     ]
   },
-  "updater": {
-    "channel": "beta",
-    "url": "https://raw.githubusercontent.com/eReuse/desktop-app/master/updates.json"
-  },
   "engines": {
     "node": ">=7.10"
   },
