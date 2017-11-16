@@ -1,4 +1,5 @@
 const Service = require('node-linux').Service
+const spawnSync = require('child_process').spawnSync
 
 // Create a new service object
 /**
@@ -10,7 +11,7 @@ let svc = new Service({
   name: 'ereusedesktopapp',
   description: 'Background Node.js script to autoupdate DesktopApp.',
   script: '/opt/MyeReuse.org_Support/resources/script-updater-background.js',
-  wait: 900
+  wait: 600
 })
 
 svc.install()
@@ -36,4 +37,5 @@ svc.on('install', function () {
   svc.start()
   console.log('Service is installed.')
   console.log('The service exists: ', svc.exists())
+  spawnSync('systemctl',['enable', 'ereusedesktopapp.service'])
 })
