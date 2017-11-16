@@ -1,5 +1,4 @@
-// todo add process.argv[2], process.argv[2]
 /**
- * @param baseUrl, baseRawUrl, branch, arch, version
+ * @param baseUrl, pathDev
  */
-require('./updaterBackground')()
+require('./updaterBackground')(null, null)

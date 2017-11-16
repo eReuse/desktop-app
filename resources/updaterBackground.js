@@ -7,7 +7,7 @@
 const EXEC_ENCODING = {encoding: 'UTF-8'}
 
 const execSync = require('child_process').execSync
-const spawn = require('child_process').spawn
+const spawnSync = require('child_process').spawnSync
 const fs = require('fs')
 const os = require('os')
 const semver = require('semver')
@@ -19,13 +19,13 @@ function now() {
   return (new Date()).toUTCString()
 }
 
-function updateIfNewerVersion() {
+function updateIfNewerVersion(baseUrl, pathDev) {
   const localVersion = getLocalVersion()
   console.log('Execution starts in ' + now() + '\n')
-  const urlDeviceHub = configEnv.url || 'http://devicehub.ereuse.net'
-  DeviceHub.get(urlDeviceHub + '/desktop-app').then(response => {
+  const urlDeviceHub = baseUrl || configEnv.url || 'http://devicehub.ereuse.net'
+  return DeviceHub.get(urlDeviceHub + '/desktop-app').then(response => {
     _.merge(configEnv, response)
-    let path = '/opt/MyeReuse.org_Support/resources/.env.json' // todo take path auto
+    let path = pathDev || '/opt/MyeReuse.org_Support/resources/.env.json' // todo take path auto
     fs.writeFileSync(path, JSON.stringify(configEnv), 'utf-8', function(err) {
       if (err) throw err
     })
@@ -51,12 +51,10 @@ function updateIfNewerVersion() {
         const path = os.tmpdir() + installer
         fs.writeFileSync(path, response, {encoding: 'binary'})
         console.log('Installing...')
-        spawn('gdebi', ['--n', path]).on('exit', function () {
-          console.log('Installation finished ' + now())
-        })
+        spawnSync('gdebi', ['--n', path])
+        console.log('Installation done!')
       }).catch(err => {
         console.error(err)
-        console.log('error getDeb:' + err)
       })
     } else {
       console.log('There is not an update (your version: ' + localVersion + ', repo version: ' + appInfo.version + ').')
