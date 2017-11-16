@@ -5,11 +5,11 @@ const fs = require('fs')
 const os = require('os')
 const notifier = require('node-notifier')
 const DeviceHub = require('../../resources/devicehub')
-
+const version = require('../../resources/.env.json').version
 // Documentation login and send json http://devicehub.ereuse.org/
 
 function generateAndSubmitSnapshot () {
-  spawnSync('gksudo', ['-k', '/opt/MyeReuse.org_Support/eReuse.org-Workbench/workbench/scripts/erwb-devel'])
+  // spawnSync('gksudo', ['-k', '/opt/MyeReuse.org_Support/eReuse.org-Workbench/workbench/scripts/erwb-devel'])
   // spawnSync('sudo erwb')
   console.log('Child exited wb finished')
   const filePath = path.join(os.tmpdir(), '*.json')
@@ -19,7 +19,7 @@ function generateAndSubmitSnapshot () {
       const text = fs.readFileSync(path, 'UTF-8')
       snapshot = JSON.parse(text)
       snapshot.snapshotSoftware = 'DesktopApp'
-      snapshot.versionDesktopApp = '0.1.0' //todo take automatically local version
+      snapshot.versionDesktopApp = version || '0.1.0' //todo take automatically local version
     } catch (err) {
       console.error(err)
       return

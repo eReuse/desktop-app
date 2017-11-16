@@ -36,7 +36,7 @@ function createWindow () {
   })
 
   // Open devtools
-  // winMain.webContents.openDevTools()
+  winMain.webContents.openDevTools()
 
   winMain.on('closed', () => {
     winMain = null
@@ -46,6 +46,7 @@ function createWindow () {
 // Run create windows function
 app.on('ready', () => {
   createWindow()
+  // spawnSync('sudo erwb')
   //electron-settings
 })
 
