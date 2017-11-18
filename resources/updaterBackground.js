@@ -61,7 +61,7 @@ function updateIfNewerVersion(baseUrl, pathDev) {
     }
   }).catch(err => {
     console.log('There is an error, couldn\'t get desktop-app info')
-    console.error(err)
+    // console.error(err)
   })
   // Execution starts and finished in the same time??
   console.log('Execution finished at ' + now() + '\n')

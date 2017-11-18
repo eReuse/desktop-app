@@ -5,7 +5,7 @@ const exec = require('child_process')
 const mocha = require('mocha')
 const describe = mocha.describe
 const {before, after} = require('mocha')
-const {beforeEach, afterEach}= mocha
+// const {beforeEach, afterEach}= mocha
 const it = mocha.it
 
 describe('Test Updater', function () {
@@ -14,18 +14,21 @@ describe('Test Updater', function () {
 
   let version = '0.1.0' // equal version in fixtures
   let returnEnv = function (req, res) {
-    const pathDeb = path.join(__dirname + '../resources/.env.json')
-     /* const options = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    } */
-     // todo !!! Error on sendFile, need stringify or check req of sendFile?
-    res.sendFile(pathDeb)
+    const pathEnv = '/home/nadeu/Documents/WebstormProjects/desktop-app/resources/.env.json'
+    const options = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    res.sendFile(pathEnv, options)
   }
   const returnDeb = function (req, response) {
     const pathDeb = path.join(__dirname + '/fixtures/eReuse.org-DesktopApp_' + version + '_x64.deb')
     const options = {
-      'Content-Type': 'application/octet-stream'
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/octet-stream'
+      }
     }
     response.sendFile(pathDeb, options)
   }
@@ -52,10 +55,11 @@ describe('Test Updater', function () {
 
   it('updates when there is a newer version', function (done) {
     // this.timeout(0)
-    const update = require('./../resources/updaterBackground.js')
+    const update = require('./../resources/updaterBackground')
     const baseUrl = 'http://localhost:3000'
     const pathDev = '/home/nadeu/Documents/WebstormProjects/desktop-app/resources/.env.json'
     update(baseUrl, pathDev).then(function (code) {
+      //todo then is undefined??
       expect(parseInt(code)).equal(0)
       exec('apt-cache policy ereuse.org-desktopapp | grep -w "Installed:"', (_, out) => {
         // We double check we have correctly uninstalled the app
