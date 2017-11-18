@@ -57,6 +57,10 @@
       "target": "squirrel",
       "icon": "./build/icon.ico"
     },
+    "files": [
+      "**/*",
+      "!tests${/*}"
+    ],
     "extraResources": [
       {
         "from": "./resources"
