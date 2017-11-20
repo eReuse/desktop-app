@@ -19,14 +19,18 @@ function now() {
   return (new Date()).toUTCString()
 }
 
-function updateIfNewerVersion(baseUrl, pathDev) {
+/**
+ *
+ * @param baseUrlDh
+ * @param pathEnv
+ * @return Promise
+ */
+function updateIfNewerVersion(baseUrlDh = configEnv.url, pathEnv = '/opt/MyeReuse.org_Support/resources/.env.json') {
   const localVersion = getLocalVersion()
   console.log('Execution starts in ' + now() + '\n')
-  const urlDeviceHub = baseUrl || configEnv.url || 'http://devicehub.ereuse.net'
-  return DeviceHub.get(urlDeviceHub + '/desktop-app').then(response => {
+  return DeviceHub.get(baseUrlDh + '/desktop-app').then(response => {
     _.merge(configEnv, response)
-    let path = pathDev || '/opt/MyeReuse.org_Support/resources/.env.json' // todo take path auto
-    fs.writeFileSync(path, JSON.stringify(configEnv), 'utf-8', function(err) {
+    fs.writeFileSync(pathEnv, JSON.stringify(configEnv), 'utf-8', function(err) {
       if (err) throw err
     })
     const appInfo = {
@@ -44,34 +48,34 @@ function updateIfNewerVersion(baseUrl, pathDev) {
     }
     const installer = '/' + appInfo.name + '_' + appInfo.version + '_' + appInfo.arch + '.' + typeFile
     //else if (win) type = 'exe'
-    const pathDeb = urlDeviceHub + file.url
+    const pathDeb = baseUrlDh + file.url
     if (semver.gt(appInfo.version, localVersion)) {
       console.log('New version ' + appInfo.version + '.')
       DeviceHub.get(pathDeb, true).then(function install(response) {
-        const path = os.tmpdir() + installer
-        fs.writeFileSync(path, response, {encoding: 'binary'})
-        console.log('Installing...')
-        spawnSync('gdebi', ['--n', path])
-        console.log('Installation done!')
+        const pathFile = os.tmpdir() + installer
+        fs.writeFileSync(pathFile, response, {encoding: 'binary'})
+        console.log('Installing...' + now())
+        spawnSync('sudo', ['gdebi', '--n', pathFile])
+        console.log('Installation done! Time ' + now())
       }).catch(err => {
         console.error(err)
       })
     } else {
       console.log('There is not an update (your version: ' + localVersion + ', repo version: ' + appInfo.version + ').')
-    }
+    }    return response
   }).catch(err => {
-    console.log('There is an error, couldn\'t get desktop-app info')
-    // console.error(err)
+    console.log('There is an error, couldn\'t get desktop-app info: ' + err)
   })
-  // Execution starts and finished in the same time??
-  console.log('Execution finished at ' + now() + '\n')
 }
 
 // grep "Instaŀlat:" change depends on which language | now is catalan version
 function getLocalVersion () {
+  // command don't work well if you uninstall app with apt purge <appname>
   const command = 'apt-cache policy ereuse.org-desktopapp | grep "Insta"'
   const localVersion = execSync(command, EXEC_ENCODING).split(':')[1].trim()
   return semver.valid(localVersion) ? localVersion : '0.0.0'
 }
 
-module.exports = updateIfNewerVersion
+module.exports = {
+  updateIfNewerVersion: updateIfNewerVersion
+}

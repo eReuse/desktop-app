@@ -2,7 +2,7 @@
 # You need to run this file with sudo or root user
 
 # todo ??Need it update
-# apt-get update
+apt-get update
 
 #delete n folder
 curl -L https://git.io/n-install | N_PREFIX=/opt/MyeReuse.org_Support/n bash -s -- -y 7.10.1

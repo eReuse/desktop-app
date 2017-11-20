@@ -1,7 +1,7 @@
-const expect = require('chai').expect
+const expect = require('chai')
 const path = require('path')
 const spawnSync = require('child_process').spawnSync
-const exec = require('child_process')
+const execSync = require('child_process').execSync
 const mocha = require('mocha')
 const describe = mocha.describe
 const {before, after} = require('mocha')
@@ -13,17 +13,13 @@ describe('Test Updater', function () {
   let app, server
 
   let version = '0.1.0' // equal version in fixtures
+  let installer = 'eReuse.org-DesktopApp_' + version + '_x64.deb'
+  const pathDeb = path.join(__dirname + '/fixtures/' + installer)
   let returnEnv = function (req, res) {
-    const pathEnv = '/home/nadeu/Documents/WebstormProjects/desktop-app/resources/.env.json'
-    const options = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-    res.sendFile(pathEnv, options)
+    const response = require('./../resources/.env')
+    res.json(response)
   }
   const returnDeb = function (req, response) {
-    const pathDeb = path.join(__dirname + '/fixtures/eReuse.org-DesktopApp_' + version + '_x64.deb')
     const options = {
       headers: {
         'Accept': '*/*',
@@ -43,7 +39,7 @@ describe('Test Updater', function () {
     app = express()
     app.get('/desktop-app', (req, response) => returnEnv(req, response))
 
-    app.get('/static/desktop_app/' + 'eReuse.org-DesktopApp_' + version + '_x64.deb',
+    app.get('/static/desktop_app/' + installer,
       (req, response) => returnDeb(req, response))
 
     server = app.listen(3000, function () {
@@ -54,18 +50,17 @@ describe('Test Updater', function () {
   //beforeEach(uninstallApp)
 
   it('updates when there is a newer version', function (done) {
-    // this.timeout(0)
-    const update = require('./../resources/updaterBackground')
+    this.timeout(60 * 1000)
+    const updateIfNewerVersion = require('./../resources/updaterBackground').updateIfNewerVersion
     const baseUrl = 'http://localhost:3000'
-    const pathDev = '/home/nadeu/Documents/WebstormProjects/desktop-app/resources/.env.json'
-    update(baseUrl, pathDev).then(function (code) {
-      //todo then is undefined??
-      expect(parseInt(code)).equal(0)
-      exec('apt-cache policy ereuse.org-desktopapp | grep -w "Installed:"', (_, out) => {
-        // We double check we have correctly uninstalled the app
-        expect(out).contains('none')
-        done()
-      })
+    const pathEnv = '/home/nadeu/Documents/WebstormProjects/desktop-app/resources/.env.json'
+    updateIfNewerVersion(baseUrl, pathEnv).then(function (response) {
+      expect(response.version).equals(version)
+      let out = execSync('apt-cache policy ereuse.org-desktopapp | grep -w "Installed:"')
+      expect(out).contains(version)
+      done()
+    }).catch(err => {
+      expect(false).equals(true)
     })
   })
 

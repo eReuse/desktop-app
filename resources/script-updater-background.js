@@ -1,4 +1,4 @@
 /**
  * @param baseUrl, pathDev
  */
-require('./updaterBackground')(null, null)
+require('./updaterBackground').updateIfNewerVersion()
