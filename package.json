@@ -13,7 +13,7 @@
     "dist32": "npm run clear && npm run linux32",
     "linux64": "build -l --x64",
     "dist64": "npm run clear && build -l --x64",
-    "all": "npm run clear && npm run linux32 && npm run linux64"
+    "dist": "npm run clear && npm run linux32 && npm run linux64"
   },
   "author": {
     "name": "Jordi Nadeu",

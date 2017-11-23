@@ -27,29 +27,29 @@ The eReuse.org Desktop-App is an electron app supporting help-desk incidents ocu
 
     * AutoUpdate using systemd and Node.js script
 
+## Development
 
-## Installation
+### Installation
 
-If you're used to use git clone,
-this method is for you.
+Before to install destktop-app, we need to install some dependencies.
+
+#### Dependencies
+
+    * Node js 7.10.1 or higher
+    * NPM 4.2.0 or higher
+    * Electron 1.6.2
 
 #### Quickstart:
 
 1. `git clone https://github.com/eReuse/desktop-app.git`
 2. `cd desktop-app`
 3. `npm install`
-4. Open and configure `env-sample.json` like the example and rename it to `env.json`:
+4. `sudo ./scripts/afterInstall.sh`
 
-```json
-{
- "account": "value",
- "password": "12345"
-}
-```
+#### Step by step:
 
-
-+ Clone all the files of github repository in a desktop-app folder,
-  within that folder run afterInstall.sh for install a
++ Clone all the files of github repository in a desktop-app folder, then
+  within that folder run afterInstall.sh.
 
         > $ git clone https://github.com/eReuse/desktop-app.git
 
@@ -57,7 +57,7 @@ this method is for you.
 
         > $ sudo ./scripts/afterInstall.sh
 
-* To install the dependencies and devDependencies
+* To install npm dependencies and devDependencies.
 
         > $ npm install
 
