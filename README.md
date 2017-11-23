@@ -33,7 +33,7 @@ The eReuse.org Desktop-App is an electron app supporting help-desk incidents ocu
 
 Before to install destktop-app, we need to install some dependencies.
 
-#### Dependencies
+#### Dependencies:
 
     * Node js 7.10.1 or higher
     * NPM 4.2.0 or higher
