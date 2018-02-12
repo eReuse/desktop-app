@@ -1,11 +1,10 @@
 {
   "name": "eReuse.org-DesktopApp",
   "productName": "My eReuse.org & Support",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Support PC and report incidents, and also show information about eReuse.org and the social contribution with usage of this computer",
   "main": "app/main.js",
   "scripts": {
-    "postinstall": "install-app-deps",
     "start": "electron .",
     "test": "gksudo -k ./node_modules/mocha/bin/mocha tests/updater.test.js",
     "clear": "rm -rf dist",
@@ -75,8 +74,11 @@
     "url": "https://github.com/eReuse/desktop-app.git"
   },
   "dependencies": {
+    "ajv": "^6.1.1",
     "bootstrap": "^3.3.7",
     "chokidar": "^1.7.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "lodash": "latest",
@@ -90,7 +92,7 @@
   "devDependencies": {
     "chai": "^4.1.1",
     "chai-as-promised": "^7.1.1",
-    "electron": "^1.6.2",
+    "electron": "^1.7.12",
     "electron-builder": "^17.0.1",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^10.2.1",
