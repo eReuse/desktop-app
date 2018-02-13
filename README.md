@@ -35,9 +35,9 @@ Before to install destktop-app, we need to install some dependencies.
 
 #### Dependencies:
 
-    * Node js 7.10.1 or higher
-    * NPM 4.2.0 or higher
-    * Electron 1.6.2
+    * Node js 7.10.1
+    * NPM 4.2.0
+    * Electron 1.6.*
 
 #### Quickstart:
 
