@@ -9,7 +9,7 @@ body {
 
 #iframe {
     background-color: cadetblue;
-    height: 90vh;
+    height: 85vh;
     width: 100%;
 }
 
@@ -20,6 +20,7 @@ body {
     padding: 0;
 }
 
-.botoD{
+#botoDiag{
     margin-top: 2em;
+    margin-bottom: 2em;
 }
