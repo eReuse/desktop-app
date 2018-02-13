@@ -70,7 +70,7 @@ function deviceHub () {
      */
     static _post(uri, body, db = null) {
       const _method = _.clone(method)
-      _method.url = db ? BASE_URL + db + '/' + uri : BASE_URL + uri
+      _method.url = db ? BASE_URL + '/' + db + uri : BASE_URL + uri
       _method.body = body
       _method.method = 'POST'
       return rp(_method)

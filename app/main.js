@@ -5,9 +5,6 @@ const url = require('url')
 let winMain = null // create main window
 let version = app.getVersion()
 
-//const nameLog = process.env.USERNAME
-const name = process.env.USER
-console.log(name)
 console.log(version)
 
 function createWindow () {
