@@ -4,6 +4,10 @@
   printf "-----------/n"
   cat /etc/systemd/system/ereusedesktopapp.service
   printf "-----------/n"
-  apt-cache policy ereuse.org-desktopapp
+
+  # change apt-cache to dpkg-query to take version
+  dpkg-query -W -f='${Version}\n' ereuse.org-desktopapp
+  dpkg-query --show --show-format='${Version}\n' ereuse.org-desktopapp
+
   printf "-----------/n"
- #journalctl -u ereusedesktopapp
+  #journalctl -u ereusedesktopapp
